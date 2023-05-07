@@ -17,7 +17,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     }
     void InitializePool(int poolSize)
     {
-        Debug.Log("Hi");
+        //Debug.Log("Hi");
         for (int i=0;i< poolSize;i++)
         {
             objectQueue.Enqueue(GenerateObject());
@@ -34,14 +34,14 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     {
         if(objectQueue.Count>0)
         {
-            Debug.Log("한개 빼가요");
+            //Debug.Log("한개 빼가요");
             T obj = objectQueue.Dequeue();
             obj.gameObject.SetActive(true);
             return obj;
         }
         else
         {
-            Debug.Log("더이상 줄게 없어요");
+            //Debug.Log("더이상 줄게 없어요");
             return null;
         }
         
@@ -50,7 +50,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     {
         obj.gameObject.SetActive(false);
         objectQueue.Enqueue(obj);
-        Debug.Log("넣기 완료");
+        //Debug.Log("넣기 완료");
 
     }
 

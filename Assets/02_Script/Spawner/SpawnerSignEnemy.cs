@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnerSignEnemy : MonoBehaviour
 {
-    float miny = -4f;
-    float maxy = 4f;
+    public float miny = -3f;
+    public float maxy = 3f;
     WaitForSeconds spawnTime= new WaitForSeconds(1f);
 
     private void OnEnable()
