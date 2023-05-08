@@ -6,6 +6,14 @@ public class PlayerBullet : MonoBehaviour
 {
     public float moveSpeed = 6f;
     public GameObject bulletEffect;
+    private void OnEnable()
+    {
+        GameManager.Instance.BulletDecrease();
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.BulletIncrease();
+    }
 
     private void Update()
     {

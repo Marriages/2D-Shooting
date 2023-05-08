@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class SpawnerDirectEnemy : MonoBehaviour
 {
-    float miny = -4f;
-    float maxy = 4f;
+    public float miny = -4f;
+    public float maxy = 4f;
     WaitForSeconds spawnTime = new WaitForSeconds(1f);
+    IEnumerator generateSign;
 
-    private void OnEnable()
+    public void StartSpawn()
     {
-        StartCoroutine(GenerateNormal());
+        generateSign = GenerateSign();
+        Debug.Log("Direct Spawner Start");
+        StartCoroutine(generateSign);
+    }
+    public void StopSpawn()
+    {
+        Debug.Log("Direct Spawner Stop");
+        StopCoroutine(generateSign);
+        generateSign = null;
     }
 
-    IEnumerator GenerateNormal()
+    IEnumerator GenerateSign()
     {
         while (true)
         {

@@ -49,6 +49,7 @@ public class PlayerMove : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("Player : Heart Minus");
             PlayerHit?.Invoke();
         }
     }

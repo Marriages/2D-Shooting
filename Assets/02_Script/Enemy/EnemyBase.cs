@@ -27,6 +27,8 @@ public class EnemyBase : MonoBehaviour
         {
             GameObject obj = Instantiate(enemyExplosionEffect);
             obj.transform.position = transform.position;
+            GameManager.Instance.ScoreUp(10);
+            GameManager.Instance.PrograssUp();
             EnemyDequeue();
         }
     }
