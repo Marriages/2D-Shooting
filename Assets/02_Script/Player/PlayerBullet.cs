@@ -21,8 +21,15 @@ public class PlayerBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject obj = Instantiate(bulletEffect);
-        obj.transform.position = transform.position;
-        BulletPool.instance.ReturnObject(this);
+        if(collision.CompareTag("Enemy"))
+        {
+            GameObject obj = Instantiate(bulletEffect);
+            obj.transform.position = transform.position;
+            BulletPool.instance.ReturnObject(this);
+        }
+        else if(collision.CompareTag("KillZone"))
+        {
+            BulletPool.instance.ReturnObject(this);
+        }
     }
 }

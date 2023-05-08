@@ -8,7 +8,7 @@ public class EnemyBase : MonoBehaviour
     public int maxHeart = 3;
     public float moveSpeed = 3f;
     public GameObject enemyExplosionEffect;
-    
+    public GameObject coin;
 
     private void OnEnable()
     {
@@ -29,6 +29,8 @@ public class EnemyBase : MonoBehaviour
             obj.transform.position = transform.position;
             GameManager.Instance.ScoreUp(10);
             GameManager.Instance.PrograssUp();
+            obj = Instantiate(coin);
+            obj.transform.position=transform.position;
             EnemyDequeue();
         }
     }

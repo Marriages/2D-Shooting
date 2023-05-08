@@ -160,3 +160,4 @@ MonoBehaviour:
   maxHeart: 1
   moveSpeed: 3
   enemyExplosionEffect: {fileID: 5537939034982290191, guid: cdd5a8d609d08074fb3f3cbc55f85334, type: 3}
+  coin: {fileID: 3208182207193536655, guid: 38314173e9a812c4da3a816206e1a8e7, type: 3}
