@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     Vector2 inputDir;
     float dirY=0f;
     public float moveSpeed;
+    public Action PlayerHit;
 
     private void Awake()
     {
@@ -42,5 +43,13 @@ public class PlayerMove : MonoBehaviour
         dirY = inputDir.y;
         anim.SetFloat("PosY", dirY);
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            PlayerHit?.Invoke();
+        }
     }
 }
