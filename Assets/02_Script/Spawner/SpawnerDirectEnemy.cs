@@ -11,13 +11,13 @@ public class SpawnerDirectEnemy : MonoBehaviour
 
     public void StartSpawn()
     {
+        //Debug.Log("Direct Spawner Start");
         generateSign = GenerateSign();
-        Debug.Log("Direct Spawner Start");
         StartCoroutine(generateSign);
     }
     public void StopSpawn()
     {
-        Debug.Log("Direct Spawner Stop");
+        //Debug.Log("Direct Spawner Stop");
         StopCoroutine(generateSign);
         generateSign = null;
     }

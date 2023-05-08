@@ -8,11 +8,13 @@ public class PlayerBullet : MonoBehaviour
     public GameObject bulletEffect;
     private void OnEnable()
     {
-        GameManager.Instance.BulletDecrease();
+        if(GameManager.Instance != null)
+            GameManager.Instance.BulletDecrease();
     }
     private void OnDisable()
     {
-        GameManager.Instance.BulletIncrease();
+        if(GameManager.Instance != null)
+            GameManager.Instance.BulletIncrease();
     }
 
     private void Update()

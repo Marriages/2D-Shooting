@@ -6,7 +6,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
 {
     
     public static ObjectPool<T> instance;
-    public int poolSize = 16;
+    public int poolSize;
     public T objectPrefab;
     Queue<T> objectQueue = new Queue<T>();
 

@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     SpawnerDirectEnemy spawnerDirect;
     SpawnerSignEnemy spawnerSign;
 
+    GameObject gameStartButton;
 
     bool isGaming = false;
 
@@ -44,9 +45,6 @@ public class GameManager : MonoBehaviour
         ConnectDelegate();
         PreInitialize();
         UISetting();
-
-        //이친구는 나중에 버튼을 누르던 어떤걸 누르던했을떄 실행할 수 있도록...
-        CurrentStageStart();
     }
     void FindComponent()
     {
@@ -55,6 +53,7 @@ public class GameManager : MonoBehaviour
         ui = FindObjectOfType<UIController>();
         spawnerDirect = FindObjectOfType<SpawnerDirectEnemy>();
         spawnerSign = FindObjectOfType<SpawnerSignEnemy>();
+        gameStartButton = transform.GetChild(0).gameObject;
     }
     void ConnectDelegate()
     {
@@ -69,6 +68,7 @@ public class GameManager : MonoBehaviour
         bulletMaxNum = 8;
 
         isGaming = false;
+        gameStartButton.SetActive(true);
     }
     void UISetting()
     {
@@ -80,18 +80,12 @@ public class GameManager : MonoBehaviour
     //게임이 처음 시작될때 또는 스테이지 재시작 때 초기화를 위해 사용됨.
     //매 스테이지마다 갱신용으로 사용됨.
 
-    void Initialize()
-    {
-        slider.value = 0;
-        stage += 1;
-        playerHeart = playerHeartMax;
-        slider.value = 0;
-        spawnerDirect.StopSpawn();
-        spawnerSign.StopSpawn();
-    }
-    void CurrentStageStart()
+    public void CurrentStageStart()
     {
         isGaming = true;
+        stage += 1;
+        slider.value = 0;
+        playerHeart = playerHeartMax;
         spawnerDirect.StartSpawn();
         spawnerSign.StartSpawn();
     }
@@ -101,6 +95,7 @@ public class GameManager : MonoBehaviour
         spawnerDirect.StopSpawn();
         spawnerSign.StopSpawn();
         StartCoroutine(SliderValueDecreaseEffect());
+        StartCoroutine(ChoosePlayerAbility());
     }
     IEnumerator SliderValueDecreaseEffect()
     {
@@ -110,6 +105,10 @@ public class GameManager : MonoBehaviour
             slider.value -= 0.01f;
             yield return null;
         }
+    }
+    IEnumerator ChoosePlayerAbility()
+    {
+        yield return null;
     }
 
     public void ScoreUp(int value)

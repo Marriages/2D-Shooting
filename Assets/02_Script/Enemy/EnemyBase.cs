@@ -21,18 +21,23 @@ public class EnemyBase : MonoBehaviour
 
     void Atacked()
     {
-        Debug.Log("Hit");
+        //Debug.Log("Hit");
         heart--;
         if(heart < 1)
         {
-            GameObject obj = Instantiate(enemyExplosionEffect);
-            obj.transform.position = transform.position;
-            GameManager.Instance.ScoreUp(10);
-            GameManager.Instance.PrograssUp();
-            obj = Instantiate(coin);
-            obj.transform.position=transform.position;
-            EnemyDequeue();
+            EnemyDie();
+            
         }
+    }
+    void EnemyDie()
+    {
+        GameObject obj = Instantiate(enemyExplosionEffect);
+        obj.transform.position = transform.position;
+        GameManager.Instance.ScoreUp(10);
+        GameManager.Instance.PrograssUp();
+        obj = Instantiate(coin);
+        obj.transform.position = transform.position;
+        EnemyDequeue();
     }
     protected virtual void EnemyDequeue()
     {
@@ -52,6 +57,10 @@ public class EnemyBase : MonoBehaviour
         else if(collision.gameObject.CompareTag("KillZone"))
         {
             EnemyDequeue();
+        }
+        else if(collision.gameObject.CompareTag("Player"))
+        {
+            EnemyDie();
         }
     }
 
