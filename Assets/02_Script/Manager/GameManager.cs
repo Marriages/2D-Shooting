@@ -159,4 +159,26 @@ public class GameManager : MonoBehaviour
         
     }
 
+    //--------------------------------UI로부터 PlayerAbility 선택시, 게임에 반영되게 하고자 할 함수들----------------------------------------
+    public void AbilityDamage1dot5Up()
+    {
+        Debug.Log("Test Delegate");
+    }
+    public void AbilityBulletDouble()
+    {
+        Debug.Log("Test Delegate");
+    }
+    public void AbilityBulletCapacityDouble()
+    {
+        Debug.Log("Test Delegate");
+    }
+    public void AbilityMoveSpeed1dot5up()
+    {
+        Debug.Log("Test Delegate");
+    }
+    public void AbilityBulletSpeedDouble()
+    {
+        Debug.Log("Test Delegate");
+    }
+
 }

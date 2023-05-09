@@ -302,6 +302,74 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UIChoice"",
+            ""id"": ""b9bc4856-00f0-4786-a682-3ae293d195cb"",
+            ""actions"": [
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""bbda60f3-b62f-4736-96fb-6ab311e1ed93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""7657464b-e7d7-46e3-87f8-5babd62c5387"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Decide"",
+                    ""type"": ""Button"",
+                    ""id"": ""965abe63-7e16-4e30-a74a-7e471e8687c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0be239a7-d31f-4b5d-a3e8-9c5397085b5d"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2fa21cd-331f-454d-a7f4-00bb75d369ed"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95cd39db-13e7-414b-a620-864bf2f5e9cf"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Decide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -333,6 +401,11 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         m_Test_Test5 = m_Test.FindAction("Test5", throwIfNotFound: true);
         m_Test_Test6 = m_Test.FindAction("Test6", throwIfNotFound: true);
         m_Test_Test7 = m_Test.FindAction("Test7", throwIfNotFound: true);
+        // UIChoice
+        m_UIChoice = asset.FindActionMap("UIChoice", throwIfNotFound: true);
+        m_UIChoice_Left = m_UIChoice.FindAction("Left", throwIfNotFound: true);
+        m_UIChoice_Right = m_UIChoice.FindAction("Right", throwIfNotFound: true);
+        m_UIChoice_Decide = m_UIChoice.FindAction("Decide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -526,6 +599,55 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         }
     }
     public TestActions @Test => new TestActions(this);
+
+    // UIChoice
+    private readonly InputActionMap m_UIChoice;
+    private IUIChoiceActions m_UIChoiceActionsCallbackInterface;
+    private readonly InputAction m_UIChoice_Left;
+    private readonly InputAction m_UIChoice_Right;
+    private readonly InputAction m_UIChoice_Decide;
+    public struct UIChoiceActions
+    {
+        private @InputSystemController m_Wrapper;
+        public UIChoiceActions(@InputSystemController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Left => m_Wrapper.m_UIChoice_Left;
+        public InputAction @Right => m_Wrapper.m_UIChoice_Right;
+        public InputAction @Decide => m_Wrapper.m_UIChoice_Decide;
+        public InputActionMap Get() { return m_Wrapper.m_UIChoice; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIChoiceActions set) { return set.Get(); }
+        public void SetCallbacks(IUIChoiceActions instance)
+        {
+            if (m_Wrapper.m_UIChoiceActionsCallbackInterface != null)
+            {
+                @Left.started -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnRight;
+                @Decide.started -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnDecide;
+                @Decide.performed -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnDecide;
+                @Decide.canceled -= m_Wrapper.m_UIChoiceActionsCallbackInterface.OnDecide;
+            }
+            m_Wrapper.m_UIChoiceActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
+                @Decide.started += instance.OnDecide;
+                @Decide.performed += instance.OnDecide;
+                @Decide.canceled += instance.OnDecide;
+            }
+        }
+    }
+    public UIChoiceActions @UIChoice => new UIChoiceActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -551,5 +673,11 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         void OnTest5(InputAction.CallbackContext context);
         void OnTest6(InputAction.CallbackContext context);
         void OnTest7(InputAction.CallbackContext context);
+    }
+    public interface IUIChoiceActions
+    {
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
+        void OnDecide(InputAction.CallbackContext context);
     }
 }
