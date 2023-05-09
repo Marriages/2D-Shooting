@@ -34,4 +34,8 @@ public class PlayerBullet : MonoBehaviour
             BulletPool.instance.ReturnObject(this);
         }
     }
+    public void AbilityBulletSpeedDouble()
+    {
+        moveSpeed *= 2;
+    }
 }

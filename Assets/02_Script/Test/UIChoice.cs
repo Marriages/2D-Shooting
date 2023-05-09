@@ -18,7 +18,7 @@ public struct Ability
 }
 
 
-public class UIChoiceTest : MonoBehaviour
+public class UIChoice : MonoBehaviour
 {
     Image[] choiceOutline;
     Image[] choiceImage;
@@ -85,21 +85,21 @@ public class UIChoiceTest : MonoBehaviour
     {
         abil = new Ability[5];
         abil[0].abilityName = "Damage x 1.5";
-        abil[0].abilityImage = Resources.Load<Sprite>("Image/BulletDouble");
+        abil[0].abilityImage = Resources.Load<Sprite>("Image/DamageUp");
         abil[0].abilityDelegate = AbilityDamage1dot5Up;
         //GameManager.Instance.AbilityBulletDouble;
         // 다른 클래스의 함수를 넣는 것은 불가능해보인다.  -> 내부적으로 GameManager로 접근할 수 있는 함수를 따로 만들었다.
 
         abil[1].abilityName = "Bullet Capacity x 1.5";
-        abil[1].abilityImage = Resources.Load<Sprite>("Image/BulletDouble");
+        abil[1].abilityImage = Resources.Load<Sprite>("Image/BulletCapacityUp");
         abil[1].abilityDelegate = AbilityBulletCapacityDouble;
 
         abil[2].abilityName = "Move Speed x 1.5";
-        abil[2].abilityImage = Resources.Load<Sprite>("Image/BulletDouble");
+        abil[2].abilityImage = Resources.Load<Sprite>("Image/MoveSpeedUp");
         abil[2].abilityDelegate = AbilityMoveSpeed1dot5up;
 
         abil[3].abilityName = "Bullet Speed x2";
-        abil[3].abilityImage = Resources.Load<Sprite>("Image/BulletDouble");
+        abil[3].abilityImage = Resources.Load<Sprite>("Image/BulletSpeedUp");
         abil[3].abilityDelegate = AbilityBulletSpeedDouble;
 
         abil[4].abilityName = "Double Bullet Fire";
@@ -138,10 +138,16 @@ public class UIChoiceTest : MonoBehaviour
         // 세개의 선택지에 InitializeAbility 또는 UiDecide에서 섞긴 abilList의 1,2,3번째 값을 순서대로 넣을 것.
         for(int i=0;i< indexNum; i++)
         {
-            
-            //지금은 Resource를 사용하지만, 나중에는.......Bundle을 사용해보도록 하자!
-            choiceImage[i].sprite = abilList[i].abilityImage;
-            choiceText[i].text = abilList[i].abilityName;
+            if (abilList.Count>=3)
+            {
+                //지금은 Resource를 사용하지만, 나중에는.......Bundle을 사용해보도록 하자!
+                choiceImage[i].sprite = abilList[i].abilityImage;
+                choiceText[i].text = abilList[i].abilityName;
+            }
+            else
+            {
+                GameManager.Instance.NextStageReady();
+            }
         }
     }
 
@@ -151,9 +157,9 @@ public class UIChoiceTest : MonoBehaviour
         abilList[uiIndex].abilityDelegate();
         abilList.RemoveAt(uiIndex);
         abilList = ShuffleAbility(abilList);
-        
+
         //게임매니저에게 내 할일 끝났다고 전해주기.
-        gameObject.SetActive(false);
+        GameManager.Instance.NextStageReady();
     }
     private void UILeftMove(InputAction.CallbackContext _)
     {

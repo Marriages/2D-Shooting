@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b507d0a440ebd74980530dcca555570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHeart: 1
+  maxHeart: 3
   moveSpeed: 3
   enemyExplosionEffect: {fileID: 5537939034982290191, guid: cdd5a8d609d08074fb3f3cbc55f85334, type: 3}
   coin: {fileID: 3208182207193536655, guid: 38314173e9a812c4da3a816206e1a8e7, type: 3}

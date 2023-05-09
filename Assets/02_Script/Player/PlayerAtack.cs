@@ -9,6 +9,7 @@ public class PlayerAtack : MonoBehaviour
     GameObject fireFlash;
     Transform firePosition;
     public GameObject firePrefab;
+    bool doubleMode = false;
 
     private void Awake()
     {
@@ -31,15 +32,35 @@ public class PlayerAtack : MonoBehaviour
     }
     private void OnFire(InputAction.CallbackContext _)
     {
-        PlayerBullet obj = BulletPool.instance.GetObject();
-        if(obj != null )
+        if(doubleMode==false)
         {
-            obj.transform.position = firePosition.position;
-            StartCoroutine(FireFlash());
+            PlayerBullet obj = BulletPool.instance.GetObject();
+            if(obj != null )
+            {
+                obj.transform.position = firePosition.position;
+                StartCoroutine(FireFlash());
+            }
+            else
+            {
+                // 틱틱 소리가 나게해서 효과음 주기
+            }
         }
         else
         {
-            Debug.Log("총알이 없어요...");
+            PlayerBullet obj1 = BulletPool.instance.GetObject();
+            PlayerBullet obj2 = BulletPool.instance.GetObject();
+
+            if (obj1 != null && obj2 !=null)
+            {
+                obj1.transform.position = firePosition.position + Vector3.up*0.5f;
+                obj2.transform.position = firePosition.position + Vector3.down * 0.5f;
+                StartCoroutine(FireFlash());
+            }
+            else
+            {
+                // 틱틱 소리가 나게해서 효과음 주기
+            }
+
         }
     }
     IEnumerator FireFlash()
@@ -51,5 +72,9 @@ public class PlayerAtack : MonoBehaviour
     private void OnBomb(InputAction.CallbackContext _)
     {
 
+    }
+    public void AbilityBulletDouble()
+    {
+        doubleMode = true;
     }
 }

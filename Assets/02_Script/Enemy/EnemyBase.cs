@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-    int heart = 3;
-    public int maxHeart = 3;
+    float heart = 3;
+    public float maxHeart = 3;
     public float moveSpeed = 3f;
+    public float getDamage = 1;     //테스트가 끝난 후 private로 변경하기.
     public GameObject enemyExplosionEffect;
     public GameObject coin;
 
@@ -22,8 +23,8 @@ public class EnemyBase : MonoBehaviour
     void Atacked()
     {
         //Debug.Log("Hit");
-        heart--;
-        if(heart < 1)
+        heart -= getDamage;
+        if(heart < 0.1f)
         {
             EnemyDie();
             
@@ -62,6 +63,11 @@ public class EnemyBase : MonoBehaviour
         {
             EnemyDie();
         }
+    }
+    public void AbilityDamage1dot5Up()
+    {
+        //Debug.Log("데미지 2배로 받기 적용됨");
+        getDamage *= 1.5f;
     }
 
 

@@ -11,12 +11,12 @@ public class SpawnerSignEnemy : MonoBehaviour
     public void StartSpawn()
     {
         generateNormal = GenerateNormal();
-        Debug.Log("Sign Spawner Start");
+        //Debug.Log("Sign Spawner Start");
         StartCoroutine(generateNormal);
     }
     public void StopSpawn()
     {
-        Debug.Log("Sign Spawner Stop");
+        //Debug.Log("Sign Spawner Stop");
         StopCoroutine(generateNormal);
         generateNormal = null;
     }

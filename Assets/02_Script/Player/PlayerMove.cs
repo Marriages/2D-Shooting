@@ -53,4 +53,8 @@ public class PlayerMove : MonoBehaviour
             PlayerHit?.Invoke();
         }
     }
+    public void AbilityMoveSpeed1dot5up()
+    {
+        moveSpeed *= 1.5f;
+    }
 }
