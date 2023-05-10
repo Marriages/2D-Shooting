@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    PlayerMove player;
+    PlayerMove playerMove;
+    PlayerAtack playerAtack;
+    CameraShake shakeCamera;
 
     int playerHeart = 3;
     public int PlayerHerat { get => playerHeart; }
@@ -20,15 +22,19 @@ public class GameManager : MonoBehaviour
     public int Stage { get => stage; }
 
     int stageMax = 3;
-    float prograss = 0;
     Slider slider;
     UIController ui;
     int currentBulletNum = 8;
     int bulletMaxNum = 8;
+    float prograssValue = 0.1f;
     public int BulletMaxNum { get => bulletMaxNum; }
     UIChoice uiChoice;
     SpawnerDirectEnemy spawnerDirect;
     SpawnerSignEnemy spawnerSign;
+
+    public int stage1Quantity = 10;
+    public int stage2Quantity = 15;
+
 
 
 
@@ -50,17 +56,24 @@ public class GameManager : MonoBehaviour
     }
     void FindComponent()
     {
-        player = FindObjectOfType<PlayerMove>();
+        playerMove = FindObjectOfType<PlayerMove>();
+        playerAtack = FindObjectOfType<PlayerAtack>();
         slider = FindObjectOfType<PrograssSlider>().GetComponent<Slider>();
         ui = FindObjectOfType<UIController>();
         spawnerDirect = FindObjectOfType<SpawnerDirectEnemy>();
         spawnerSign = FindObjectOfType<SpawnerSignEnemy>();
         gameStartButton = transform.GetChild(0).gameObject;
         uiChoice = FindObjectOfType<UIChoice>();
+        shakeCamera = FindObjectOfType<CameraShake>();
     }
     void ConnectDelegate()
     {
-        player.PlayerHit += PlayerHeartMinus;
+        playerMove.PlayerHit += PlayerHeartMinus;
+        playerMove.PlayerDie += UIPlayerDieSetting;
+    }
+    void UIPlayerDieSetting()
+    {
+        ui.PlayerDieSetting();
     }
     void PreInitialize()
     {
@@ -90,12 +103,33 @@ public class GameManager : MonoBehaviour
         stage += 1;
         slider.value = 0;
         playerHeart = playerHeartMax;
+        switch(stage)
+        {
+            case 1:
+                Debug.Log("Case 1");
+                prograssValue = (1.0f / stage1Quantity);
+                break;
+            case 2:
+                Debug.Log("Case 2");
+                prograssValue = (1.0f / stage2Quantity);
+                break;
+            case 3:
+                Debug.Log("Case 3");
+                prograssValue = 1;
+                break;
+            default:
+                Debug.Log("Case Default");
+                prograssValue = 0.1f;
+                break;
+        }
         spawnerDirect.StartSpawn();
         spawnerSign.StartSpawn();
         UISetting();
     }
     public void NextStageReady()
     {
+        playerAtack.PlayerAtackInputConnect();
+        playerMove.PlayerMoveInputConnect();
         uiChoice.transform.parent.gameObject.SetActive(false);
         gameStartButton?.SetActive(true);
     }
@@ -115,6 +149,10 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1f);
+        playerAtack.PlayerAtackInputUnConnect();
+        playerMove.PlayerMoveInputUnConnect();
+        playerMove.PlayerMoveReset();
+        playerMove.transform.position = Vector3.zero;
         uiChoice.transform.parent.gameObject.SetActive(true);
     }
 
@@ -129,9 +167,12 @@ public class GameManager : MonoBehaviour
         { 
             playerHeart--;
             ui.HeartUpdate(playerHeart);
+            shakeCamera.ShakeCamera();
             if (playerHeart < 1)
-                Debug.Log("Player Die");
-                //플레이어가 죽을때 실행될 코드 작성하기.
+            {
+                AudioManager.instance.AudioBackOff();
+                playerMove.PlayerDieEffect();
+            }
         }
     }
     //총알사용됨
@@ -154,9 +195,11 @@ public class GameManager : MonoBehaviour
     }
     public void PrograssUp()
     {
+        //Stage3 보스스테이지의 경우,,, 진행도가 보스의 체력이 되도록...조절해야함!!
         if(slider.value<1 && isGaming)
         {
-            slider.value += 0.1f;
+            slider.value += prograssValue;
+
             if(slider.value>=1)
             {
                 Debug.Log("Next Stage~");
@@ -215,7 +258,7 @@ public class GameManager : MonoBehaviour
     }
     public void AbilityMoveSpeed1dot5up()
     {
-        player.AbilityMoveSpeed1dot5up();
+        playerMove.AbilityMoveSpeed1dot5up();
     }
     public void AbilityBulletSpeedDouble()
     {

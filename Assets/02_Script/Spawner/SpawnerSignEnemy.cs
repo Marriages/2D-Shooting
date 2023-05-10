@@ -7,23 +7,23 @@ public class SpawnerSignEnemy : MonoBehaviour
     public float miny = -3f;
     public float maxy = 3f;
     WaitForSeconds spawnTime= new WaitForSeconds(1f);
-    IEnumerator generateNormal;
+    IEnumerator generateSign;
     public void StartSpawn()
     {
-        generateNormal = GenerateNormal();
+        generateSign = GenerateSign();
         //Debug.Log("Sign Spawner Start");
-        StartCoroutine(generateNormal);
+        StartCoroutine(generateSign);
     }
     public void StopSpawn()
     {
         //Debug.Log("Sign Spawner Stop");
-        StopCoroutine(generateNormal);
-        generateNormal = null;
+        StopCoroutine(generateSign);
+        generateSign = null;
     }
     
-    IEnumerator GenerateNormal()
+    IEnumerator GenerateSign()
     {
-        while(true)
+        while(generateSign!=null)
         {
             yield return spawnTime;
             SignEnemy obj = SignEnemyPool.instance.GetObject();

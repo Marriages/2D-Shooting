@@ -10,7 +10,10 @@ public class PlayerBullet : MonoBehaviour
     private void OnEnable()
     {
         if(GameManager.instance != null)
+        {
+            AudioManager.instance.AudioPlayerAtack();
             GameManager.instance.BulletDecrease();
+        }
     }
     private void OnDisable()
     {

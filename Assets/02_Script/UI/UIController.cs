@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     TextMeshProUGUI BulletValue;
     TextMeshProUGUI ScoreValue;
 
+    GameObject gameover;
+
     string[] heartNum = { "X_X", "♥", "♥♥", "♥♥♥" };
     // 0발 ~ 15발까지
     string[] bulletNum = {"Empty","o","oo","ooo","oooo","ooooo","oooooo","ooooooo",
@@ -23,6 +25,8 @@ public class UIController : MonoBehaviour
         StageValue = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
         BulletValue = transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
         ScoreValue = transform.GetChild(4).GetChild(1).GetComponent<TextMeshProUGUI>();
+        gameover = transform.GetChild(6).gameObject;
+        gameover.SetActive(false);
     }
     private void OnEnable()
     {
@@ -59,6 +63,13 @@ public class UIController : MonoBehaviour
     public void ScoreSetting(int value)
     {
         ScoreValue.text = value.ToString();
+    }
+    public void PlayerDieSetting()
+    {
+        gameover.SetActive(true);
+        AudioManager.instance.AudioPlayerDie();
+        //Debug.Log("플레이어 사망 UI 효과");
+        //게임오버 이미지 보여주고 소리까지 출력하고, 랭킹 함 보여주고 이번 플레이에 대한 정보 보여주고, 타이틀 가려면 엔터 누르게 하기.
     }
 
 }

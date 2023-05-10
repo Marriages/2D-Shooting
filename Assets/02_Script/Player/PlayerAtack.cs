@@ -20,11 +20,19 @@ public class PlayerAtack : MonoBehaviour
     }
     private void OnEnable()
     {
+        PlayerAtackInputConnect();
+    }
+    private void OnDisable()
+    {
+        PlayerAtackInputUnConnect();
+    }
+    public void PlayerAtackInputConnect()
+    {
         inputActions.Player.Enable();
         inputActions.Player.Fire.performed += OnFire;
         inputActions.Player.Bomb.performed += OnBomb;
     }
-    private void OnDisable()
+    public void PlayerAtackInputUnConnect()
     {
         inputActions.Player.Bomb.performed -= OnBomb;
         inputActions.Player.Fire.performed -= OnFire;

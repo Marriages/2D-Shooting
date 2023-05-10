@@ -28,10 +28,14 @@ public class EnemyBase : MonoBehaviour
     {
         //Debug.Log("Hit");
         heart -= getDamage;
+        
         if(heart < 0.1f)
         {
             EnemyDie();
-            
+        }
+        else
+        {
+            AudioManager.instance.AudioEnemyHit();
         }
     }
     void EnemyDie()
@@ -40,6 +44,8 @@ public class EnemyBase : MonoBehaviour
         obj.transform.position = transform.position;
         GameManager.instance.ScoreUp(10);
         GameManager.instance.PrograssUp();
+
+        AudioManager.instance.AudioEnemyDie();
         obj = Instantiate(coin);
         obj.transform.position = transform.position;
         EnemyDequeue();

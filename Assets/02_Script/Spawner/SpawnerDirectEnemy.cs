@@ -7,24 +7,24 @@ public class SpawnerDirectEnemy : MonoBehaviour
     public float miny = -4f;
     public float maxy = 4f;
     WaitForSeconds spawnTime = new WaitForSeconds(1f);
-    IEnumerator generateSign;
+    IEnumerator generageDirect;
 
     public void StartSpawn()
     {
         //Debug.Log("Direct Spawner Start");
-        generateSign = GenerateSign();
-        StartCoroutine(generateSign);
+        generageDirect = GenerateDirect();
+        StartCoroutine(generageDirect);
     }
     public void StopSpawn()
     {
         //Debug.Log("Direct Spawner Stop");
-        StopCoroutine(generateSign);
-        generateSign = null;
+        StopCoroutine(generageDirect);
+        generageDirect = null;
     }
 
-    IEnumerator GenerateSign()
+    IEnumerator GenerateDirect()
     {
-        while (true)
+        while (generageDirect!=null)
         {
             yield return spawnTime;
             DirectEnemy obj = DirectEnemyPool.instance.GetObject();
