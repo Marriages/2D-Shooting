@@ -1,7 +1,7 @@
 /*
  작업 노트.
  
- 구현해야 할 기능
+구현해야 할 기능
 1Stage : DIrect만, 2Stage ; Direct + Sign, 3Stage : Boss
 Boss 구현
 오프닝씬 구현
