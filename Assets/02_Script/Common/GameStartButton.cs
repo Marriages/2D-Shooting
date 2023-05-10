@@ -6,7 +6,10 @@ public class GameStartButton : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance.CurrentStageStart();
-        this.gameObject.SetActive(false);
+        if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
+        {
+            GameManager.instance.CurrentStageStart();
+            this.gameObject.SetActive(false);
+        }
     }
 }

@@ -146,7 +146,7 @@ public class UIChoice : MonoBehaviour
             }
             else
             {
-                GameManager.Instance.NextStageReady();
+                GameManager.instance.NextStageReady();
             }
         }
     }
@@ -159,7 +159,7 @@ public class UIChoice : MonoBehaviour
         abilList = ShuffleAbility(abilList);
 
         //게임매니저에게 내 할일 끝났다고 전해주기.
-        GameManager.Instance.NextStageReady();
+        GameManager.instance.NextStageReady();
     }
     private void UILeftMove(InputAction.CallbackContext _)
     {
@@ -185,19 +185,19 @@ public class UIChoice : MonoBehaviour
 
     //------------------Ability 구조체 전용 GamaManager 접근 내부함수-----------------------------
     public void AbilityDamage1dot5Up()  { 
-        GameManager.Instance.AbilityDamage1dot5Up();
+        GameManager.instance.AbilityDamage1dot5Up();
     }
     public void AbilityBulletDouble()   {
-        GameManager.Instance.AbilityBulletDouble();
+        GameManager.instance.AbilityBulletDouble();
     }
     public void AbilityBulletCapacityDouble(){
-        GameManager.Instance.AbilityBulletCapacityDouble();
+        GameManager.instance.AbilityBulletCapacityDouble();
     }
     public void AbilityMoveSpeed1dot5up() {
-        GameManager.Instance.AbilityMoveSpeed1dot5up();
+        GameManager.instance.AbilityMoveSpeed1dot5up();
     }
     public void AbilityBulletSpeedDouble() {
-        GameManager.Instance.AbilityBulletSpeedDouble();
+        GameManager.instance.AbilityBulletSpeedDouble();
     }
     //------------------Ability 구조체 전용 GamaManager 접근 내부함수-----------------------------
 }

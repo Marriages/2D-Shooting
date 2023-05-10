@@ -53,5 +53,12 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
         //Debug.Log("넣기 완료");
 
     }
+    public void ExtendPool(int x)
+    {
+        for (int i = 0; i < x; i++)
+        {
+            objectQueue.Enqueue(GenerateObject());
+        }
+    }
 
 }

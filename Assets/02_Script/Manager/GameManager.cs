@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager instance;
     PlayerMove player;
 
     int playerHeart = 3;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
     }
 
     private void OnEnable()
@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
         foreach(SignEnemy e in signEnemy)
             e.AbilityDamage1dot5Up();
 
+        ui.BulletSetting(bulletMaxNum);
         //Debug.Log(signEnemy.Length);
     }
     public void AbilityBulletDouble()
@@ -194,8 +195,23 @@ public class GameManager : MonoBehaviour
     }
     public void AbilityBulletCapacityDouble()
     {
+        int x = bulletMaxNum;
+        
+        BulletPool bulletPool = FindObjectOfType<BulletPool>();
+        bulletPool.ExtendPool(x);
+
+        currentBulletNum += bulletMaxNum;
         bulletMaxNum *= 2;
-        //Pool에서 현재 가진 2배만큼 총알을 늘려야되는데 개 귀 찮 네
+        
+
+
+        PlayerBullet[] playerBullet = bulletPool.GetComponentsInChildren<PlayerBullet>(true);
+        foreach (PlayerBullet e in playerBullet)
+        {
+            e.AbilityBulletSpeedDouble();
+        }
+
+        //\UI에도 반영
     }
     public void AbilityMoveSpeed1dot5up()
     {

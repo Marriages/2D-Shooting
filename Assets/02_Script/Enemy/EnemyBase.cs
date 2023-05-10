@@ -10,7 +10,11 @@ public class EnemyBase : MonoBehaviour
     public float getDamage = 1;     //테스트가 끝난 후 private로 변경하기.
     public GameObject enemyExplosionEffect;
     public GameObject coin;
-
+    protected Rigidbody2D rigid;
+    protected virtual void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
     private void OnEnable()
     {
         EnemyInitialize();
@@ -34,8 +38,8 @@ public class EnemyBase : MonoBehaviour
     {
         GameObject obj = Instantiate(enemyExplosionEffect);
         obj.transform.position = transform.position;
-        GameManager.Instance.ScoreUp(10);
-        GameManager.Instance.PrograssUp();
+        GameManager.instance.ScoreUp(10);
+        GameManager.instance.PrograssUp();
         obj = Instantiate(coin);
         obj.transform.position = transform.position;
         EnemyDequeue();

@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.ScoreUp(5);
+            GameManager.instance.ScoreUp(5);
             Destroy(this.gameObject);
         }
         else if(collision.gameObject.CompareTag("KillZone"))

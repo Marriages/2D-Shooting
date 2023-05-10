@@ -6,15 +6,16 @@ public class PlayerBullet : MonoBehaviour
 {
     public float moveSpeed = 6f;
     public GameObject bulletEffect;
+    bool isDouble = false;      //데미지 두배가 체크되었는지
     private void OnEnable()
     {
-        if(GameManager.Instance != null)
-            GameManager.Instance.BulletDecrease();
+        if(GameManager.instance != null)
+            GameManager.instance.BulletDecrease();
     }
     private void OnDisable()
     {
-        if(GameManager.Instance != null)
-            GameManager.Instance.BulletIncrease();
+        if(GameManager.instance != null)
+            GameManager.instance.BulletIncrease();
     }
 
     private void Update()
@@ -36,6 +37,10 @@ public class PlayerBullet : MonoBehaviour
     }
     public void AbilityBulletSpeedDouble()
     {
-        moveSpeed *= 2;
+        if(isDouble==false)
+        {
+            isDouble = true;
+            moveSpeed *= 2;
+        }
     }
 }
