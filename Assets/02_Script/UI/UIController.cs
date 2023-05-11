@@ -5,7 +5,7 @@ using TMPro;
 
 public class UIController : MonoBehaviour
 {
-    TextMeshProUGUI heartValue;
+    TextMeshProUGUI HeartValue;
     TextMeshProUGUI StageValue;
     TextMeshProUGUI BulletValue;
     TextMeshProUGUI ScoreValue;
@@ -21,10 +21,15 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        heartValue = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
-        StageValue = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
-        BulletValue = transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
-        ScoreValue = transform.GetChild(4).GetChild(1).GetComponent<TextMeshProUGUI>();
+        if(HeartValue == null)
+            HeartValue = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
+        if (StageValue == null)
+            StageValue = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+        if (BulletValue == null)
+            BulletValue = transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
+        if (ScoreValue == null)
+            ScoreValue = transform.GetChild(4).GetChild(1).GetComponent<TextMeshProUGUI>();
+
         gameover = transform.GetChild(6).gameObject;
         gameover.SetActive(false);
     }
@@ -34,11 +39,19 @@ public class UIController : MonoBehaviour
     }
     public void HeartUpdate(int value)
     {
-        heartValue.text = heartNum[value];
+        HeartValue.text = heartNum[value];
     }
     public void HeartSetting(int value)
     {
-        heartValue.text = heartNum[value];
+        if(HeartValue!=null)
+        {
+            HeartValue.text = heartNum[value];
+        }
+        else
+        {
+            HeartValue = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
+            HeartValue.text = heartNum[value];
+        }
     }
     public void StageUpdate(int value)
     {
@@ -46,7 +59,16 @@ public class UIController : MonoBehaviour
     }
     public void StageSetting(int value)
     {
-        StageValue.text = value.ToString();
+        if(StageValue!=null)
+        {
+            StageValue.text = value.ToString();
+        }
+        else
+        {
+            StageValue = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+            StageValue.text = value.ToString();
+        }
+
     }
     public void BulletUpdate(int value)
     {
@@ -54,7 +76,15 @@ public class UIController : MonoBehaviour
     }
     public void BulletSetting(int value)
     {
-        BulletValue.text = bulletNum[value];
+        if(BulletValue!=null)
+        {
+            BulletValue.text = bulletNum[value];
+        }
+        else
+        {
+            BulletValue = transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
+            BulletValue.text = bulletNum[value];
+        }
     }
     public void ScoreUpdate(int value)
     {
@@ -62,7 +92,16 @@ public class UIController : MonoBehaviour
     }
     public void ScoreSetting(int value)
     {
-        ScoreValue.text = value.ToString();
+        if (ScoreValue != null)
+        {
+            ScoreValue.text = value.ToString();
+        }
+        else
+        {
+            ScoreValue = transform.GetChild(4).GetChild(1).GetComponent<TextMeshProUGUI>();
+            ScoreValue.text = value.ToString();
+        }
+
     }
     public void PlayerDieSetting()
     {

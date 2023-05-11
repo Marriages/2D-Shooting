@@ -25,7 +25,15 @@ public class AudioManager : MonoBehaviour
     
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         //audioBackground = GetComponents<AudioSource>()[0];        //변수를 Serialize로 선언했기때문에 Awake에서 찾을 필요 없음.
         //audioEffect = GetComponents<AudioSource>()[1];
     }

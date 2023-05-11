@@ -11,16 +11,9 @@ public class GameManager : MonoBehaviour
     CameraShake shakeCamera;
 
     int playerHeart = 3;
-    public int PlayerHerat { get => playerHeart; }
-
     public int playerHeartMax = 3;
-
     int score = 0;
-    public int Score { get => score; }
-
     int stage = 1;
-    public int Stage { get => stage; }
-
     int stageMax = 3;
     Slider slider;
     UIController ui;
@@ -46,7 +39,6 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
-
     private void OnEnable()
     {
         FindComponent();
@@ -246,7 +238,7 @@ public class GameManager : MonoBehaviour
         currentBulletNum += bulletMaxNum;
         bulletMaxNum *= 2;
         
-
+        // 와나이거때문에 이상한친구들도 속도가 두배가되버리는 마 법
 
         PlayerBullet[] playerBullet = bulletPool.GetComponentsInChildren<PlayerBullet>(true);
         foreach (PlayerBullet e in playerBullet)
