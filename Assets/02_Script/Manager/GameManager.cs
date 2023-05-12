@@ -31,9 +31,11 @@ public class GameManager : MonoBehaviour
 
 
 
+
     GameObject gameStartButton;
 
     bool isGaming = false;
+    bool bulletSpeedDouble = false;
 
     private void Awake()
     {
@@ -144,7 +146,7 @@ public class GameManager : MonoBehaviour
         playerAtack.PlayerAtackInputUnConnect();
         playerMove.PlayerMoveInputUnConnect();
         playerMove.PlayerMoveReset();
-        playerMove.transform.position = Vector3.zero;
+        
         uiChoice.transform.parent.gameObject.SetActive(true);
     }
 
@@ -238,12 +240,15 @@ public class GameManager : MonoBehaviour
         currentBulletNum += bulletMaxNum;
         bulletMaxNum *= 2;
         
-        // 와나이거때문에 이상한친구들도 속도가 두배가되버리는 마 법
-
-        PlayerBullet[] playerBullet = bulletPool.GetComponentsInChildren<PlayerBullet>(true);
-        foreach (PlayerBullet e in playerBullet)
+        // 총알스피드 2배가 이미 적용된 상태에서 새로 총알 생성할경우, 마저 총알 스피드가 2배가 되게끔 하는 코드.
+        if(bulletSpeedDouble)
         {
-            e.AbilityBulletSpeedDouble();
+            PlayerBullet[] playerBullet = bulletPool.GetComponentsInChildren<PlayerBullet>(true);
+            foreach (PlayerBullet e in playerBullet)
+            {
+                e.AbilityBulletSpeedDouble();
+            }
+
         }
 
         //\UI에도 반영
@@ -254,6 +259,7 @@ public class GameManager : MonoBehaviour
     }
     public void AbilityBulletSpeedDouble()
     {
+        bulletSpeedDouble=true;
         BulletPool bulletPool = FindObjectOfType<BulletPool>();
         PlayerBullet[] playerBullet = bulletPool.GetComponentsInChildren<PlayerBullet>(true);
         foreach(PlayerBullet e in playerBullet)

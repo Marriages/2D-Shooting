@@ -64,6 +64,8 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 0e48d5aaf56184f408e3da666433a2d8, type: 3}
     - {fileID: 2800000, guid: 4f3ca6c2ba5724c4c90aee322cf79137, type: 3}
     - {fileID: 2800000, guid: 65019c4b741d6493d97d4072eff8e23b, type: 3}
+    - {fileID: 2800000, guid: 12291d9aa888b41c58f66187eb386317, type: 3}
+    - {fileID: 2800000, guid: 5ed891a8765a748118b877982d422583, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -81,10 +83,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4b2611e6b3f8a3b4fabb70e344ed51fa, type: 3}
   - {fileID: 21300000, guid: e4516f278fcd54d1e981e1c1d1d828b8, type: 3}
   - {fileID: 21300000, guid: 33078ab7884b4224a9d86880a01e6ccf, type: 3}
+  - {fileID: 21300000, guid: 5ed891a8765a748118b877982d422583, type: 3}
   - {fileID: 21300000, guid: f33310c887ad74232b542e14ab4500d4, type: 3}
   - {fileID: 21300000, guid: 66e2bee867275422c9de0a02da52d95b, type: 3}
   - {fileID: 21300000, guid: 12d461e92d708274ab3d9fbf60d51d9c, type: 3}
   - {fileID: 21300000, guid: 422f764a28eadd64e9d29ed5bf6756b8, type: 3}
+  - {fileID: 21300000, guid: 12291d9aa888b41c58f66187eb386317, type: 3}
   - {fileID: 21300000, guid: 0e48d5aaf56184f408e3da666433a2d8, type: 3}
   - {fileID: 21300000, guid: 65019c4b741d6493d97d4072eff8e23b, type: 3}
   - {fileID: 21300000, guid: 2797b69cc2d2896488841848985a89c2, type: 3}
@@ -102,10 +106,12 @@ SpriteAtlas:
   - asteroid-small
   - bg-stars
   - NicePng_ko-png_2359549
+  - shoot2
   - enemy2
   - enemy1
   - explosion5
   - explosion4
+  - shoot1
   - flash
   - player2
   - explosion2
