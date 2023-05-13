@@ -4713,6 +4713,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3785102579151196219, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
+      propertyPath: backSoundSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785102579151196220, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
+      propertyPath: m_Volume
+      value: 0.262
+      objectReference: {fileID: 0}
     - target: {fileID: 3785102579151196221, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
       propertyPath: m_RootOrder
       value: 5

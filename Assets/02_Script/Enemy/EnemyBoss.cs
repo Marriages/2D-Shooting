@@ -21,6 +21,7 @@ public class EnemyBoss : MonoBehaviour
     Transform player;
 
     Transform bossBody;
+    SpriteRenderer bossBodyRenderer;
     EnemyBossBody bossBodyDetector;
     Transform normalFirePosition1;
     Transform normalFirePosition2;
@@ -45,21 +46,32 @@ public class EnemyBoss : MonoBehaviour
     int spawnIndex=0;
 
     float currentTime = 0;
-    public float dashWaitTime = 1f;
+    public float dashWaitTime = 2f;
 
     Transform[] enemySpawnPoint;
 
+    int getDamage = 2;
+
+    Color dashColor;
+    public GameObject destroyEffect;
+    int destroyEffectNum=20;
+
 
     //보스 데미지 받는비율을,,,,,1.5배일경우 고려해봐얗게는걸?
-    int bossHP=240;
+    public int bossHP=360;
     public int BossHP
     {
         get => bossHP;
         set
         {
-            if(value<0)
+            if(value>0)
             {
+                bossHP -= getDamage;
                 //bossstate= DieState;
+            }
+            else
+            {
+                BossDieSetting();
             }
         }
     }
@@ -80,6 +92,9 @@ public class EnemyBoss : MonoBehaviour
         catch (NullReferenceException) { Debug.Log("플레이어 없음"); }
 
         bossBody = transform.GetChild(0).transform;
+        bossBodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        dashColor = bossBodyRenderer.color;
+
         traceFirePosition = bossBody.GetChild(0).transform;
         normalFirePosition1 = bossBody.GetChild(1).transform;
         normalFirePosition2 = bossBody.GetChild(2).transform;
@@ -113,7 +128,13 @@ public class EnemyBoss : MonoBehaviour
             enemySpawnPoint[i] = transform.GetChild(0).GetChild(3).GetChild(i).transform;
         }
     }
-
+    private void OnEnable()
+    {
+        bossBodyDetector = bossBody.GetComponent<EnemyBossBody>();
+        bossBodyDetector.BossHit += () => BossHP--;
+        if (GameManager.instance.damageDoubleCheck == true)
+            getDamage = (int)(getDamage * 1.5f);
+    }
 
     private void Start()
     {
@@ -244,6 +265,9 @@ public class EnemyBoss : MonoBehaviour
     {
         if(Time.time-currentTime < dashWaitTime)
         {
+            dashColor.g -= 0.5f * Time.deltaTime;
+            dashColor.b -= 0.5f * Time.deltaTime;
+            bossBodyRenderer.color = dashColor;
             LookTarget(player.transform);
         }
         else
@@ -259,18 +283,46 @@ public class EnemyBoss : MonoBehaviour
         }
         else
         {
+            dashColor.r = 1f;
+            dashColor.g = 1f;
+            dashColor.b = 1f;
+            dashColor.a = 1f;
+            bossBodyRenderer.color = dashColor;
             isDone = true;
         }
 
     }
-    /*
-    private void OnEnable()
+    
+    void BossDieSetting()
     {
-        bossBodyDetector = bossBody.GetComponent<EnemyBossBody>();
-        bossBodyDetector.BossHit += () => BossHP--;
-        bossBodyDetector.BossKillZone += DashEnd;
+        //해야 할 일. 큐를 모두 비우고, BossDie를 실행할 수 있또록!
+        Debug.Log("BossDieSetting");
+        actionQueue.Clear();
+        actionQueue.Enqueue(BossDie);
+        currentTime = Time.time;
+    }
+    void BossDie()
+    {
+        if (Time.time - currentTime > 0.1f)
+        {
+            GameObject obj = Instantiate(destroyEffect);
+            obj.transform.position = bossBody.position + UnityEngine.Random.insideUnitSphere;
+            destroyEffectNum--;
+            currentTime = Time.time;
+            Debug.Log(destroyEffectNum);
+        }
+        else if(destroyEffectNum>0)
+        {
+            Debug.Log("대기중");
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
+
+    /*
     private void FixedUpdate()
     {
         bossstate();

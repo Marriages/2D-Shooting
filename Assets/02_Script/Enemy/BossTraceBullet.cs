@@ -25,7 +25,7 @@ public class BossTraceBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Bullet") || collision.CompareTag("KillZone"))
+        if(collision.CompareTag("Bullet") || collision.CompareTag("KillZone") || collision.CompareTag("Player"))
         {
             gameObject.SetActive(false);
         }

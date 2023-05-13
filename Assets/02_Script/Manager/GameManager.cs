@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int stage1Quantity = 10;
     public int stage2Quantity = 15;
 
+    public bool damageDoubleCheck = false;
 
 
 
@@ -206,9 +207,10 @@ public class GameManager : MonoBehaviour
     //--------------------------------UI로부터 PlayerAbility 선택시, 게임에 반영되게 하고자 할 함수들----------------------------------------
     public void AbilityDamage1dot5Up()
     {
-        // 풀의 개체들이 비활상태여서 적용이 안되는 문제가 발생함.
+        // 풀의 개체들이 비활상태여서 적용이 안되는 문제가 발생함.  -> 해결
 
         Debug.Log("AbilityDamage1dot5Up");
+        damageDoubleCheck = true;
 
         DirectEnemyPool directEnemyPool = FindObjectOfType<DirectEnemyPool>();
         DirectEnemy[] directEnemy = directEnemyPool.transform.GetComponentsInChildren<DirectEnemy>(true);
