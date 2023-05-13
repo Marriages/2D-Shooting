@@ -7,13 +7,13 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    [SerializeField] private AudioSource audioBackground;       //GetComponent¸¦ ¾ÈÇÏ±â À§ÇØ SerializeField·Î ¼±¾ğÇÔ.
-    [SerializeField] private AudioSource audioEffect;           //GetComponent¸¦ ¾ÈÇÏ±â À§ÇØ SerializeField·Î ¼±¾ğÇÔ.
+    [SerializeField] private AudioSource audioBackground;       //GetComponentë¥¼ ì•ˆí•˜ê¸° ìœ„í•´ SerializeFieldë¡œ ì„ ì–¸í•¨.
+    [SerializeField] private AudioSource audioEffect;           //GetComponentë¥¼ ì•ˆí•˜ê¸° ìœ„í•´ SerializeFieldë¡œ ì„ ì–¸í•¨.
     [SerializeField] private AudioSource audioAtack;
 
-    float backSoundSize=0.8f;
-    float effectSoundSize = 0.6f;
-    [SerializeField] float atackSoundSize = 0.4f;
+    public float backSoundSize=0.8f;
+    public float effectSoundSize = 0.6f;
+    public float atackSoundSize = 0.4f;
 
     public float BackSoundSize
     {
@@ -50,10 +50,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip background;
     public AudioClip playerHit;
     public AudioClip playerDie;
-    public AudioClip playerAtack;       // ¼Ò¸®°¡ Å­
-    public AudioClip playerCoin;        // ¼Ò¸®°¡ Á» ÀÛÀ½
+    public AudioClip playerAtack;       // ì†Œë¦¬ê°€ í¼
+    public AudioClip playerCoin;        // ì†Œë¦¬ê°€ ì¢€ ì‘ìŒ
     public AudioClip EnemyHit;
-    public AudioClip EnemyDie;          // °ÅÀÇ ¾Èµé¸²
+    public AudioClip EnemyDie;          // ê±°ì˜ ì•ˆë“¤ë¦¼
     public AudioClip GameOver;
     
     private void Awake()
@@ -67,7 +67,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //audioBackground = GetComponents<AudioSource>()[0];        //º¯¼ö¸¦ Serialize·Î ¼±¾ğÇß±â¶§¹®¿¡ Awake¿¡¼­ Ã£À» ÇÊ¿ä ¾øÀ½.
+        //audioBackground = GetComponents<AudioSource>()[0];        //ë³€ìˆ˜ë¥¼ Serializeë¡œ ì„ ì–¸í–ˆê¸°ë•Œë¬¸ì— Awakeì—ì„œ ì°¾ì„ í•„ìš” ì—†ìŒ.
         //audioEffect = GetComponents<AudioSource>()[1];
     }
 
@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
     {
         AudioInitializeSetting();
     }
-    //¿Àµğ¿À ÃÊ±â¼¼ÆÃ
+    //ì˜¤ë””ì˜¤ ì´ˆê¸°ì„¸íŒ…
     void AudioInitializeSetting()
     { 
         audioBackground.volume = BackSoundSize;
@@ -125,7 +125,7 @@ public class AudioManager : MonoBehaviour
     }
     IEnumerator AudioGameOver()
     {
-        //Debug.Log("GameOver À½¾Ç Àç»ı");
+        //Debug.Log("GameOver ìŒì•… ì¬ìƒ");
         yield return new WaitForSeconds(playerDie.length);
         audioBackground.clip = GameOver;
         audioBackground.Play();

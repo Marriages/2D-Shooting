@@ -1,26 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using System;
 
 public class EnemyBoss : MonoBehaviour
 {
-    // ÆĞÅÏ1 ÇÃ·¹ÀÌ¾î¿¡°Ô À¯µµÅº + ÀÏ¹İÅº ¹ß»ç ( BossÀÇ Fireball ½ºÅ©¸³Æ®. »ı¼ºÇÒ¶§ ÇÃ·¹ÀÌ¾îÀÇ 
-    // ÀÏ¹İÅºÀº ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡ ÇâÇÑ Á÷¼± »¡°£ ÆÄÀÌ¾îº¼ ¿¬¼Ó 3¹ß ¹ö½ºÆ® ¹ß»ç. ÀÌÈÄ ÆÄ¶õ»ö À¯µµÅº ¹ß»ç ÃÑ¾Ë·Î ÆÄ±« ºÒ°¡
-    // À¯µµÅºÀº ÃÑ¾Ë·Î ÆÄ±« °¡´ÉÇÏ¸ç º¸½ºÀÇ À§, ¾Æ·¡¿¡¼­ ÇÑ¹ß¾¿ »ı¼ºµÊ.
-    // ¹ö½ºÆ® ½Ã°£Àº 0.3ÃÊ
+    // íŒ¨í„´1 í”Œë ˆì´ì–´ì—ê²Œ ìœ ë„íƒ„ + ì¼ë°˜íƒ„ ë°œì‚¬ ( Bossì˜ Fireball ìŠ¤í¬ë¦½íŠ¸. ìƒì„±í• ë•Œ í”Œë ˆì´ì–´ì˜ 
+    // ì¼ë°˜íƒ„ì€ í”Œë ˆì´ì–´ì˜ í˜„ì¬ ìœ„ì¹˜ í–¥í•œ ì§ì„  ë¹¨ê°„ íŒŒì´ì–´ë³¼ ì—°ì† 3ë°œ ë²„ìŠ¤íŠ¸ ë°œì‚¬. ì´í›„ íŒŒë€ìƒ‰ ìœ ë„íƒ„ ë°œì‚¬ ì´ì•Œë¡œ íŒŒê´´ ë¶ˆê°€
+    // ìœ ë„íƒ„ì€ ì´ì•Œë¡œ íŒŒê´´ ê°€ëŠ¥í•˜ë©° ë³´ìŠ¤ì˜ ìœ„, ì•„ë˜ì—ì„œ í•œë°œì”© ìƒì„±ë¨.
+    // ë²„ìŠ¤íŠ¸ ì‹œê°„ì€ 0.3ì´ˆ
 
-    // ´ë±â½Ã°£ 1ÃÊ
-    // 1ÃÊµ¿¾È ÇÃ·¹ÀÌ¾î¸¦ ¹Ù¶óº¸±â ½ÃÀÛ. ÀÌÈÄ ¿òÁ÷ÀÓÀ» ¸ØÃß°í ºü¸£°Ô µ¹Áø. È­¸é ¹ÛÀ¸·Î »ç¶óÁö°í ´Ù½Ã ¿À¸¥ÂÊ¿¡¼­ µîÀåÇØ¼­ ¿ø·¡À§Ä¡ º¹±Í
+    // ëŒ€ê¸°ì‹œê°„ 1ì´ˆ
+    // 1ì´ˆë™ì•ˆ í”Œë ˆì´ì–´ë¥¼ ë°”ë¼ë³´ê¸° ì‹œì‘. ì´í›„ ì›€ì§ì„ì„ ë©ˆì¶”ê³  ë¹ ë¥´ê²Œ ëŒì§„. í™”ë©´ ë°–ìœ¼ë¡œ ì‚¬ë¼ì§€ê³  ë‹¤ì‹œ ì˜¤ë¥¸ìª½ì—ì„œ ë“±ì¥í•´ì„œ ì›ë˜ìœ„ì¹˜ ë³µê·€
 
-    // ´ë±â½Ã°£ 1ÃÊ
-    // º»ÀÎ±âÁØ ·£´ıÇÑ À§Ä¡¿¡¼­ DirectEnemy ¸ó½ºÅÍ¸¦ ÇÃ·¹ÀÌ¾î¸¦ ¹Ù¶óº¸°Ô²û ºü¸£°Ô »ı¼º(0.5ÃÊ¸¶´Ù 1¸¶¸®¾¿)
+    // ëŒ€ê¸°ì‹œê°„ 1ì´ˆ
+    // ë³¸ì¸ê¸°ì¤€ ëœë¤í•œ ìœ„ì¹˜ì—ì„œ DirectEnemy ëª¬ìŠ¤í„°ë¥¼ í”Œë ˆì´ì–´ë¥¼ ë°”ë¼ë³´ê²Œë” ë¹ ë¥´ê²Œ ìƒì„±(0.5ì´ˆë§ˆë‹¤ 1ë§ˆë¦¬ì”©)
 
-    // ´ë±â½Ã°£ 1ÃÊ  ÀÌÈÄ ÆĞÅÏ 1·Î ³Ñ¾î°¨.
+    // ëŒ€ê¸°ì‹œê°„ 1ì´ˆ  ì´í›„ íŒ¨í„´ 1ë¡œ ë„˜ì–´ê°.
     
-    public delegate void BossState();
-    BossState bossstate=null;
-
     Transform player;
 
     Transform bossBody;
@@ -41,6 +38,7 @@ public class EnemyBoss : MonoBehaviour
     public float traceBulletSpeed = 2f;
     GameObject[] normalBullet;
     GameObject[] traceBullet;
+    int normalBulletIndex=0;
 
     public float spawnInterval = 0.5f;
     public int spawnCount = 6;
@@ -48,37 +46,8 @@ public class EnemyBoss : MonoBehaviour
     float currentTime = 0;
     public float dashWaitTime = 0.5f;
 
-    enum State
-    {
-        returnState,
-        dashState,
-        fireState
-    }
-    int enumIndex=0;
 
-    private void Awake()
-    {
-        try { player = FindObjectOfType<PlayerMove>().transform; }
-        catch (System.NullReferenceException) { Debug.Log("ÇÃ·¹ÀÌ¾î ¾øÀ½"); }
-
-        bossBody = transform.GetChild(0).transform;
-        traceFirePosition = bossBody.GetChild(0).transform;
-        normalFirePosition1= bossBody.GetChild(1).transform;
-        normalFirePosition2 = bossBody.GetChild(2).transform;
-
-        restartPosition = transform.GetChild(1).GetChild(0).transform;
-        idlePosition= transform.GetChild(1).GetChild(1).transform;
-        returnPosition = transform.GetChild(1).GetChild(2).transform;
-
-        normalBullet = new GameObject[transform.GetChild(2).childCount];
-        //Debug.Log(normalBullet.Length);
-        //normalBullet = transform.GetChild(2).GetComponentsInChildren<Transform>();
-        traceBullet = new GameObject[transform.GetChild(3).childCount];
-        //Debug.Log(traceBullet.Length);
-        //traceBullet=  transform.GetChild(3).GetComponentsInChildren<Transform>();
-    }
-
-    //º¸½º µ¥¹ÌÁö ¹Ş´ÂºñÀ²À»,,,,,1.5¹èÀÏ°æ¿ì °í·ÁÇØºÁ¾é°Ô´Â°É?
+    //ë³´ìŠ¤ ë°ë¯¸ì§€ ë°›ëŠ”ë¹„ìœ¨ì„,,,,,1.5ë°°ì¼ê²½ìš° ê³ ë ¤í•´ë´ì–—ê²ŒëŠ”ê±¸?
     int bossHP=240;
     public int BossHP
     {
@@ -87,20 +56,154 @@ public class EnemyBoss : MonoBehaviour
         {
             if(value<0)
             {
-                bossstate= DieState;
+                //bossstate= DieState;
             }
         }
     }
 
-    // ÀÛ¾÷ Å¥¸¦ ÀÌ¿ëÇØ¼­ 1¹øÆĞÅÏ - ´ë±âÆĞÅÏ - 2¹øÆĞÅÏ - ´ë±âÆĞÅÏ - 3¹øÆĞÅÏ - ´ë±âÆĞÅÏ
-    // ¸Ç¾ÕÀÇ ÀÛ¾÷ÀÌ ³¡³ª¸é µğÅ¥¿Í µ¿½Ã¿¡ ÀÎÅ¥¸¦ ÇØ¼­ »óÅÂ¸¦ ¹İº¹ ÇÒ ¼ö ÀÖµµ·Ï ÁøÇàÇÒ °Í.
-    // º¸½º°¡ Á×°ÔµÇ¸é Å¥¸¦ ºñ¿ò°ú µ¿½Ã¿¡ DIe»óÅÂ¸¦ ÀÎÅ¥. ÀÌÈÄ¿¡´Â º¸½º°¡µ¿ÀÛÇÏÁö ¾ÊÀ» °ÍÀÌ´Ï.... ¿Í¿ì ½Ã¹ß ÀÌ°Å´Ù
-    // ÀÛ¾÷ Å¥¸¦ ÀÌ¿ëÇÒ °Í.
+    // ì‘ì—… íë¥¼ ì´ìš©í•´ì„œ 1ë²ˆíŒ¨í„´ - ëŒ€ê¸°íŒ¨í„´ - 2ë²ˆíŒ¨í„´ - ëŒ€ê¸°íŒ¨í„´ - 3ë²ˆíŒ¨í„´ - ëŒ€ê¸°íŒ¨í„´
+    // ë§¨ì•ì˜ ì‘ì—…ì´ ëë‚˜ë©´ ë””íì™€ ë™ì‹œì— ì¸íë¥¼ í•´ì„œ ìƒíƒœë¥¼ ë°˜ë³µ í•  ìˆ˜ ìˆë„ë¡ ì§„í–‰í•  ê²ƒ.
+    // ë³´ìŠ¤ê°€ ì£½ê²Œë˜ë©´ íë¥¼ ë¹„ì›€ê³¼ ë™ì‹œì— DIeìƒíƒœë¥¼ ì¸í. ì´í›„ì—ëŠ” ë³´ìŠ¤ê°€ë™ì‘í•˜ì§€ ì•Šì„ ê²ƒì´ë‹ˆ.... ì™€ìš° ì‹œë°œ ì´ê±°ë‹¤
+    // ì‘ì—… íë¥¼ ì´ìš©í•  ê²ƒ.
+
+    Queue<Action> actionQueue = new Queue<Action>();
+    Action currentAction;
+    bool isDone = false;
 
 
+    private void Awake()
+    {
+        try { player = FindObjectOfType<PlayerMove>().transform; }
+        catch (NullReferenceException) { Debug.Log("í”Œë ˆì´ì–´ ì—†ìŒ"); }
+
+        bossBody = transform.GetChild(0).transform;
+        traceFirePosition = bossBody.GetChild(0).transform;
+        normalFirePosition1 = bossBody.GetChild(1).transform;
+        normalFirePosition2 = bossBody.GetChild(2).transform;
+
+        restartPosition = transform.GetChild(1).GetChild(0).transform;
+        idlePosition = transform.GetChild(1).GetChild(1).transform;
+        returnPosition = transform.GetChild(1).GetChild(2).transform;
+
+        normalBullet = new GameObject[transform.GetChild(2).childCount];
+        Debug.Log(normalBullet.Length);
+        for(int i=0; i< normalBullet.Length; i++)
+        {
+            normalBullet[i] = transform.GetChild(2).GetChild(i).gameObject;
+            normalBullet[i].SetActive(false);
+            
+        }
+
+        traceBullet = new GameObject[transform.GetChild(3).childCount];
+        Debug.Log(traceBullet.Length);
+        for (int i = 0; i < traceBullet.Length; i++)
+        {
+            traceBullet[i] = transform.GetChild(3).GetChild(i).gameObject;
+            traceBullet[i].SetActive(false);
+
+        }
+    }
 
 
+    private void Start()
+    {
+        actionQueue.Enqueue(ReturnSetting);
+        actionQueue.Enqueue(ReturnState);
+        actionQueue.Enqueue(WaitOneSecond);
+        actionQueue.Enqueue(FireNormalBullet);
+        actionQueue.Enqueue(WaitOneSecond);
+    }
+    private void Update()
+    {
+        currentAction = actionQueue.Peek();
+        currentAction?.Invoke();
 
+        if( IsCurrentActionComplete() )
+        {
+            //Debug.Log("Next Action");
+            Action q = actionQueue.Dequeue();
+            actionQueue.Enqueue(q);
+        }
+    }
+    private bool IsCurrentActionComplete()
+    {
+        if (isDone)
+        {
+            isDone = false;
+            currentTime = Time.time;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private void ReturnSetting()
+    {
+        bossBody.transform.position = restartPosition.position;
+        LookTarget(idlePosition);
+        //bossBody.LookAt(Vector3.forward, Vector3.up);
+        isDone = true;
+    }
+    private void ReturnState()
+    {
+        if((idlePosition.position - bossBody.position).sqrMagnitude >0.1f)
+        {
+            LookTarget(idlePosition);
+            bossBody.transform.Translate(moveSpeed*Time.deltaTime* Vector2.left,Space.World);
+        }
+        else
+        {
+            isDone = true;
+        }
+    }
+    void WaitOneSecond()
+    {
+        if (Time.time - currentTime < 1)
+        {
+        }
+        else
+        {
+            isDone = true;
+        }
+    }
+    void FireNormalBullet()
+    {
+        if(Time.time-currentTime > fireBurstTime)
+        {
+            normalBullet[normalBulletIndex].SetActive(true);
+            normalBullet[normalBulletIndex].transform.position = normalFirePosition1.position;
+            normalBullet[normalBulletIndex].transform.rotation = normalFirePosition1.rotation;
+
+            normalBullet[normalBulletIndex + 1].SetActive(true);
+            normalBullet[normalBulletIndex + 1].transform.position = normalFirePosition2.position;
+            normalBullet[normalBulletIndex + 1].transform.rotation = normalFirePosition2.rotation;
+
+            currentTime = Time.time;
+            normalBulletIndex += 2;
+        }
+        else if(normalBulletIndex<=normalBullet.Length-2)
+        {
+            LookTarget(player);
+        }
+        else
+        {
+            normalBulletIndex = 0;
+            traceBullet[0].SetActive(true);
+            traceBullet[0].transform.position = traceFirePosition.position;
+            isDone = true;
+        }
+    }
+
+
+    void LookTarget(Transform target)
+    {
+        Vector3 lookDirection = target.position - bossBody.position;
+        lookDirection.z = 0f;
+        bossBody.rotation = Quaternion.LookRotation(Vector3.forward, lookDirection) * Quaternion.Euler(0,0,-180f);
+    }
+
+    /*
     private void OnEnable()
     {
         bossBodyDetector = bossBody.GetComponent<EnemyBossBody>();
@@ -108,10 +211,6 @@ public class EnemyBoss : MonoBehaviour
         bossBodyDetector.BossKillZone += DashEnd;
     }
 
-    private void Start()
-    {
-        bossstate = SettingState;
-    }
     private void FixedUpdate()
     {
         bossstate();
@@ -138,13 +237,13 @@ public class EnemyBoss : MonoBehaviour
     void DashState()
     {
         Debug.Log("Dash");
-        // 1ÃÊµ¿¾È ÇÃ·¹ÀÌ¾î¸¦ ¹Ù¶óº¸°í, ÀÌÈÄ¿¡´Â ±× ¹æÇâÀ» ÇâÇØ¼­ ºü¸¥ ÀÌµ¿.
+        // 1ì´ˆë™ì•ˆ í”Œë ˆì´ì–´ë¥¼ ë°”ë¼ë³´ê³ , ì´í›„ì—ëŠ” ê·¸ ë°©í–¥ì„ í–¥í•´ì„œ ë¹ ë¥¸ ì´ë™.
         if(Time.time - currentTime < dashWaitTime)
         {
             Vector3 lookDirection = player.position - bossBody.position;
-            lookDirection.z = 0f; // 2D¿¡¼­ z ÃàÀº »ç¿ëÇÏÁö ¾ÊÀ¸¹Ç·Î 0À¸·Î ¼³Á¤
+            lookDirection.z = 0f; // 2Dì—ì„œ z ì¶•ì€ ì‚¬ìš©í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ì„¤ì •
 
-            // ¹æÇâ º¤ÅÍ¸¦ È¸Àü°ªÀ¸·Î º¯È¯ÇÏ¿© A ¿ÀºêÁ§Æ®ÀÇ È¸ÀüÀ» ¼³Á¤
+            // ë°©í–¥ ë²¡í„°ë¥¼ íšŒì „ê°’ìœ¼ë¡œ ë³€í™˜í•˜ì—¬ A ì˜¤ë¸Œì íŠ¸ì˜ íšŒì „ì„ ì„¤ì •
             bossBody.rotation = Quaternion.LookRotation(Vector3.forward, lookDirection);
         }
         else
@@ -197,10 +296,12 @@ public class EnemyBoss : MonoBehaviour
                     break;
 
                 default:
-                    Debug.LogError("»óÅÂ°¡ ¾ø¾î!!");
+                    Debug.LogError("ìƒíƒœê°€ ì—†ì–´!!");
                     break;
             }
             
         }
     }
+
+    */
 }

@@ -7470,6 +7470,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3785102579151196219, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
+      propertyPath: backSoundSize
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785102579151196219, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
+      propertyPath: atackSoundSize
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785102579151196219, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
+      propertyPath: effectSoundSize
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3785102579151196221, guid: 9e6c54d9457aa5e45a23f5f25599b5bb, type: 3}
       propertyPath: m_RootOrder
       value: 7
