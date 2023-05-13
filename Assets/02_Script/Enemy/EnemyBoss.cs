@@ -42,9 +42,12 @@ public class EnemyBoss : MonoBehaviour
 
     public float spawnInterval = 0.5f;
     public int spawnCount = 6;
+    int spawnIndex=0;
 
     float currentTime = 0;
-    public float dashWaitTime = 0.5f;
+    public float dashWaitTime = 1f;
+
+    Transform[] enemySpawnPoint;
 
 
     //보스 데미지 받는비율을,,,,,1.5배일경우 고려해봐얗게는걸?
@@ -86,7 +89,7 @@ public class EnemyBoss : MonoBehaviour
         returnPosition = transform.GetChild(1).GetChild(2).transform;
 
         normalBullet = new GameObject[transform.GetChild(2).childCount];
-        Debug.Log(normalBullet.Length);
+        //Debug.Log(normalBullet.Length);
         for(int i=0; i< normalBullet.Length; i++)
         {
             normalBullet[i] = transform.GetChild(2).GetChild(i).gameObject;
@@ -95,12 +98,19 @@ public class EnemyBoss : MonoBehaviour
         }
 
         traceBullet = new GameObject[transform.GetChild(3).childCount];
-        Debug.Log(traceBullet.Length);
+        //Debug.Log(traceBullet.Length);
         for (int i = 0; i < traceBullet.Length; i++)
         {
             traceBullet[i] = transform.GetChild(3).GetChild(i).gameObject;
             traceBullet[i].SetActive(false);
 
+        }
+
+        enemySpawnPoint = new Transform[transform.GetChild(0).GetChild(3).childCount];
+        Debug.Log(enemySpawnPoint.Length);
+        for (int i = 0; i < enemySpawnPoint.Length; i++)
+        {
+            enemySpawnPoint[i] = transform.GetChild(0).GetChild(3).GetChild(i).transform;
         }
     }
 
@@ -110,8 +120,12 @@ public class EnemyBoss : MonoBehaviour
         actionQueue.Enqueue(ReturnSetting);
         actionQueue.Enqueue(ReturnState);
         actionQueue.Enqueue(WaitOneSecond);
-        actionQueue.Enqueue(FireNormalBullet);
+        actionQueue.Enqueue(FireBullet);
         actionQueue.Enqueue(WaitOneSecond);
+        actionQueue.Enqueue(SpawnEnemy);
+        actionQueue.Enqueue(WaitOneSecond);
+        actionQueue.Enqueue(DashSetting);
+        actionQueue.Enqueue(Dash);
     }
     private void Update()
     {
@@ -167,7 +181,7 @@ public class EnemyBoss : MonoBehaviour
             isDone = true;
         }
     }
-    void FireNormalBullet()
+    void FireBullet()
     {
         if(Time.time-currentTime > fireBurstTime)
         {
@@ -194,15 +208,61 @@ public class EnemyBoss : MonoBehaviour
             isDone = true;
         }
     }
-
-
     void LookTarget(Transform target)
     {
         Vector3 lookDirection = target.position - bossBody.position;
         lookDirection.z = 0f;
         bossBody.rotation = Quaternion.LookRotation(Vector3.forward, lookDirection) * Quaternion.Euler(0,0,-180f);
     }
+    void SpawnEnemy()
+    {
+        if (Time.time - currentTime > spawnInterval)
+        {
+            DirectEnemy enemy = DirectEnemyPool.instance.GetObject();
+            enemy.transform.position = enemySpawnPoint[spawnIndex].position;
 
+            enemy = DirectEnemyPool.instance.GetObject();
+            enemy.transform.position = enemySpawnPoint[enemySpawnPoint.Length - spawnIndex - 1].position;
+
+
+            currentTime = Time.time;
+            spawnIndex++;
+        }
+        else if (spawnIndex <(int)(spawnCount*0.5f))
+        {
+            LookTarget(player);
+        }
+        else
+        {
+            spawnIndex = 0;
+            isDone = true;
+        }
+        
+
+    }
+    void DashSetting()
+    {
+        if(Time.time-currentTime < dashWaitTime)
+        {
+            LookTarget(player.transform);
+        }
+        else
+        {
+            isDone = true;
+        }
+    }
+    void Dash()
+    {
+        if(returnPosition.position.x < bossBody.position.x)
+        {
+            bossBody.transform.Translate(dashSpeed * Time.deltaTime * -transform.up, Space.Self);
+        }
+        else
+        {
+            isDone = true;
+        }
+
+    }
     /*
     private void OnEnable()
     {
