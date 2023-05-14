@@ -17,8 +17,11 @@ public class SpawnerSignEnemy : MonoBehaviour
     public void StopSpawn()
     {
         //Debug.Log("Sign Spawner Stop");
-        StopCoroutine(generateSign);
+        if(generateSign != null)
+            StopCoroutine(generateSign);
         generateSign = null;
+
+        // 1스테이지에서 스탑하려하니...에러가뜸
     }
     
     IEnumerator GenerateSign()

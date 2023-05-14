@@ -9918,6 +9918,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 382966398580080722, guid: e6bae0804b4e64a48a77bcbede25c185, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 6834456830683171100, guid: 71a0f20c93057f44787283eb84acd5fc, type: 3}
+    - target: {fileID: 382966398580080722, guid: e6bae0804b4e64a48a77bcbede25c185, type: 3}
+      propertyPath: stage1Quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 382966398580080722, guid: e6bae0804b4e64a48a77bcbede25c185, type: 3}
+      propertyPath: stage2Quantity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 382966398580080723, guid: e6bae0804b4e64a48a77bcbede25c185, type: 3}
       propertyPath: m_Name
       value: GameManager

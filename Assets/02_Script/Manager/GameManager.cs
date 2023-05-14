@@ -6,41 +6,53 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+
+    [Header("Component & Object")]
     PlayerMove playerMove;
     PlayerAtack playerAtack;
     CameraShake shakeCamera;
-
-    int playerHeart = 3;
-    public int playerHeartMax = 3;
-    int score = 0;
-    int stage = 1;
-    int stageMax = 3;
     Slider slider;
     UIController ui;
-    int currentBulletNum = 8;
-    int bulletMaxNum = 8;
-    float prograssValue = 0.1f;
-    public int BulletMaxNum { get => bulletMaxNum; }
     UIChoice uiChoice;
     SpawnerDirectEnemy spawnerDirect;
     SpawnerSignEnemy spawnerSign;
+    GameObject gameStartButton;
+    public EnemyBoss boss;
+
+
+
+
+    [Header("Player Information")]
+    int playerHeart = 3;
+    public int playerHeartMax = 3;
+    int score = 0;
+
+    int bulletMaxNum = 8;
+    int currentBulletNum = 8;
+    public int BulletMaxNum { get => bulletMaxNum; }
+
+    public bool damageDoubleCheck = false;
+    bool bulletSpeedDouble = false;
+    bool isGaming = false;
+
+
+    [Header("Stage Information")]
+    int stage = 1;
+    int stageMax = 3;
+    float prograssValue = 0.1f;
 
     public int stage1Quantity = 10;
     public int stage2Quantity = 15;
 
-    public bool damageDoubleCheck = false;
 
 
 
 
-    GameObject gameStartButton;
-
-    bool isGaming = false;
-    bool bulletSpeedDouble = false;
 
     private void Awake()
-    {
-        instance = this;
+    {   instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     private void OnEnable()
     {
@@ -92,33 +104,44 @@ public class GameManager : MonoBehaviour
     //게임이 처음 시작될때 또는 스테이지 재시작 때 초기화를 위해 사용됨.
     //매 스테이지마다 갱신용으로 사용됨.
 
+
+    //--------------------------------    스테이지 진행관련   --------------------------------
+    //--------------------------------    스테이지 진행관련   --------------------------------
     public void CurrentStageStart()
     {
         isGaming = true;
         stage += 1;
         slider.value = 0;
         playerHeart = playerHeartMax;
-        switch(stage)
+
+        Debug.Log($"{stage} start");
+
+        switch (stage)
         {
             case 1:
                 Debug.Log("Case 1");
                 prograssValue = (1.0f / stage1Quantity);
+                spawnerDirect.StartSpawn();
                 break;
             case 2:
                 Debug.Log("Case 2");
                 prograssValue = (1.0f / stage2Quantity);
+                spawnerDirect.StartSpawn();
+                spawnerSign.StartSpawn();
                 break;
             case 3:
                 Debug.Log("Case 3");
-                prograssValue = 1;
+                slider.value = 1;
+
+                Instantiate(boss.gameObject);
+                prograssValue = 1.0f / boss.BossHP;
+                Debug.Log($"BossHP : {boss.BossHP}");
                 break;
             default:
                 Debug.Log("Case Default");
                 prograssValue = 0.1f;
                 break;
         }
-        spawnerDirect.StartSpawn();
-        spawnerSign.StartSpawn();
         UISetting();
     }
     public void NextStageReady()
@@ -138,7 +161,7 @@ public class GameManager : MonoBehaviour
     IEnumerator SliderValueDecreaseEffect()
     {
         yield return new WaitForSeconds(1f);
-        while(slider.value>0)
+        while (slider.value > 0)
         {
             slider.value -= 0.01f;
             yield return null;
@@ -147,9 +170,15 @@ public class GameManager : MonoBehaviour
         playerAtack.PlayerAtackInputUnConnect();
         playerMove.PlayerMoveInputUnConnect();
         playerMove.PlayerMoveReset();
-        
+
         uiChoice.transform.parent.gameObject.SetActive(true);
     }
+
+    public void BossDefeat()
+    {
+        isGaming = false;
+    }
+    //--------------------------------    UI           관련   --------------------------------
 
     public void ScoreUp(int value)
     {
@@ -191,18 +220,33 @@ public class GameManager : MonoBehaviour
     public void PrograssUp()
     {
         //Stage3 보스스테이지의 경우,,, 진행도가 보스의 체력이 되도록...조절해야함!!
-        if(slider.value<1 && isGaming)
+        if(stage<3)
         {
-            slider.value += prograssValue;
-
-            if(slider.value>=1)
+            if(slider.value<1 && isGaming)
             {
-                Debug.Log("Next Stage~");
-                NextStageChange();
+                slider.value += prograssValue;
+
+                if(slider.value>=1)
+                {
+                    Debug.Log("Next Stage~");
+                    NextStageChange();
+                }
             }
         }
-        
+        //보스스테이지!
+        else
+        { 
+            if (slider.value>0 && isGaming)
+            {
+                slider.value -= prograssValue;
+                if(slider.value<0)
+                {
+                    Debug.Log("Boss Clear");
+                }
+            }
+        }
     }
+    //--------------------------------    UI           관련   --------------------------------
 
     //--------------------------------UI로부터 PlayerAbility 선택시, 게임에 반영되게 하고자 할 함수들----------------------------------------
     public void AbilityDamage1dot5Up()

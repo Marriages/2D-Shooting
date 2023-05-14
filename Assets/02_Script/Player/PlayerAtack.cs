@@ -61,7 +61,7 @@ public class PlayerAtack : MonoBehaviour
             if (obj1 != null && obj2 !=null)
             {
                 obj1.transform.position = firePosition.position + Vector3.up*0.5f;
-                obj2.transform.position = firePosition.position + Vector3.down * 0.5f;
+                obj2.transform.position = firePosition.position + Vector3.down * 0.5f + Vector3.left * 0.1f;
                 StartCoroutine(FireFlash());
             }
             else

@@ -12,7 +12,8 @@ public class BossTraceBullet : MonoBehaviour
     }
     private void Update()
     {
-        LookTarget(player.transform);
+        if(player!=null)
+            LookTarget(player.transform);
         transform.Translate(moveSpeed * Time.deltaTime * transform.right, Space.Self);
     }
 

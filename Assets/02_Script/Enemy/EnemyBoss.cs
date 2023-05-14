@@ -66,6 +66,8 @@ public class EnemyBoss : MonoBehaviour
         {
             if(value>0)
             {
+                for(int i =0;i<getDamage;i++)
+                    GameManager.instance.PrograssUp();
                 bossHP -= getDamage;
                 //bossstate= DieState;
             }
@@ -131,9 +133,8 @@ public class EnemyBoss : MonoBehaviour
     private void OnEnable()
     {
         bossBodyDetector = bossBody.GetComponent<EnemyBossBody>();
-        bossBodyDetector.BossHit += () => BossHP--;
-        if (GameManager.instance.damageDoubleCheck == true)
-            getDamage = (int)(getDamage * 1.5f);
+        bossBodyDetector.BossHit += BossHit;
+        
     }
 
     private void Start()
@@ -147,6 +148,9 @@ public class EnemyBoss : MonoBehaviour
         actionQueue.Enqueue(WaitOneSecond);
         actionQueue.Enqueue(DashSetting);
         actionQueue.Enqueue(Dash);
+
+        if (GameManager.instance.damageDoubleCheck == true)
+            getDamage = (int)(getDamage * 1.5f);
     }
     private void Update()
     {
@@ -300,6 +304,8 @@ public class EnemyBoss : MonoBehaviour
         actionQueue.Clear();
         actionQueue.Enqueue(BossDie);
         currentTime = Time.time;
+        GameManager.instance.BossDefeat();
+        bossBodyDetector.BossHit -= BossHit;
     }
     void BossDie()
     {
@@ -313,14 +319,17 @@ public class EnemyBoss : MonoBehaviour
         }
         else if(destroyEffectNum>0)
         {
-            Debug.Log("대기중");
+            //Debug.Log("대기중");
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
+    void BossHit()
+    {
+        BossHP--;
+    }
 
     /*
     private void FixedUpdate()

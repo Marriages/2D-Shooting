@@ -11,15 +11,15 @@ public class EnemyBossBody : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Boss Col");
+        //Debug.Log("Boss Col");
         if (collision.CompareTag("Bullet"))
         {
-            Debug.Log("Bullet Collision");
+            //Debug.Log("Bullet Collision");
             BossHit?.Invoke();
         }
         else if (collision.CompareTag("KillZone"))
         {
-            Debug.Log("KillZone Collision");
+            //Debug.Log("KillZone Collision");
             BossKillZone?.Invoke();
         }
     }
