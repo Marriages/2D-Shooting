@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
+using System;
 
 public class UIController : MonoBehaviour
 {
@@ -11,6 +13,11 @@ public class UIController : MonoBehaviour
     TextMeshProUGUI ScoreValue;
 
     GameObject gameover;
+    GameObject tutorial;
+    GameObject pause;
+
+    InputSystemController inputAction;
+    bool isOption=false;
 
     string[] heartNum = { "X_X", "♥", "♥♥", "♥♥♥" };
     // 0발 ~ 15발까지
@@ -32,11 +39,20 @@ public class UIController : MonoBehaviour
 
         gameover = transform.GetChild(6).gameObject;
         gameover.SetActive(false);
+        tutorial = transform.GetChild(7).gameObject;
+        tutorial.SetActive(false);
+        pause = transform.GetChild(8).gameObject;
+        pause.SetActive(false);
+
+        inputAction = new InputSystemController();
+        
     }
     private void OnEnable()
     {
-        //bulletNum = []; 
+        inputAction.UIOption.Enable();
+        inputAction.UIOption.Pause.performed += PauseOption;
     }
+
     public void HeartUpdate(int value)
     {
         HeartValue.text = heartNum[value];
@@ -109,6 +125,26 @@ public class UIController : MonoBehaviour
         AudioManager.instance.AudioPlayerDie();
         //Debug.Log("플레이어 사망 UI 효과");
         //게임오버 이미지 보여주고 소리까지 출력하고, 랭킹 함 보여주고 이번 플레이에 대한 정보 보여주고, 타이틀 가려면 엔터 누르게 하기.
+    }
+
+    private void PauseOption(InputAction.CallbackContext _)
+    {
+        PauseSetting();
+    }
+    public void PauseSetting()
+    {
+        isOption = !isOption;
+        pause.SetActive(isOption);
+        if (isOption)
+        {
+            Time.timeScale = 0f;
+            //플레이어의 애니메이션? 입력을 막는 장치가 필요해보임.
+            //PlayerMove에 별도로 스크립트 추가할 것.
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 
 }

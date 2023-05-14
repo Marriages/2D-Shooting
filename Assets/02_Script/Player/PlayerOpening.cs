@@ -21,8 +21,12 @@ public class PlayerOpening : MonoBehaviour
     private void OnEnable()
     {
         ui.PlayerGameStart += GameStart;
-
         StartCoroutine(SignMove());
+    }
+    private void OnDisable()
+    {
+        ui.PlayerGameStart -= GameStart;
+        StopAllCoroutines();
     }
     IEnumerator SignMove()
     {

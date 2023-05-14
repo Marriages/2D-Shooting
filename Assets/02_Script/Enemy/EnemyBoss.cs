@@ -56,6 +56,7 @@ public class EnemyBoss : MonoBehaviour
     public GameObject destroyEffect;
     int destroyEffectNum=20;
 
+    public Action BossDied;
 
     //보스 데미지 받는비율을,,,,,1.5배일경우 고려해봐얗게는걸?
     public int bossHP=360;
@@ -66,6 +67,7 @@ public class EnemyBoss : MonoBehaviour
         {
             if(value>0)
             {
+                Debug.Log($"bossHP : {bossHP}");
                 for(int i =0;i<getDamage;i++)
                     GameManager.instance.PrograssUp();
                 bossHP -= getDamage;
@@ -315,7 +317,7 @@ public class EnemyBoss : MonoBehaviour
             obj.transform.position = bossBody.position + UnityEngine.Random.insideUnitSphere;
             destroyEffectNum--;
             currentTime = Time.time;
-            Debug.Log(destroyEffectNum);
+            //Debug.Log(destroyEffectNum);
         }
         else if(destroyEffectNum>0)
         {
@@ -323,6 +325,7 @@ public class EnemyBoss : MonoBehaviour
         }
         else
         {
+            BossDied?.Invoke();
             Destroy(gameObject);
         }
     }

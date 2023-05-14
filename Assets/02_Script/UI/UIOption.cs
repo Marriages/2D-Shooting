@@ -20,6 +20,11 @@ public class UIOption : MonoBehaviour
         musicSlider.onValueChanged.AddListener(BackgroundSoundSliderUpdate);
         effectSlider.onValueChanged.AddListener(EffectSoundSliderUpdate);
     }
+    private void OnDisable()
+    {
+        musicSlider.onValueChanged.RemoveListener(BackgroundSoundSliderUpdate);
+        effectSlider.onValueChanged.RemoveListener(EffectSoundSliderUpdate);
+    }
     private void Start()
     {
         musicSlider.value = AudioManager.instance.BackSoundSize;

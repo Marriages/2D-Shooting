@@ -6,13 +6,13 @@ public class PlayerBullet : MonoBehaviour
 {
     public float moveSpeed = 6f;
     public GameObject bulletEffect;
-    bool isDouble = false;      //µ¥¹ÌÁö µÎ¹è°¡ Ã¼Å©µÇ¾ú´ÂÁö
+    bool isDouble = false;      //ë°ë¯¸ì§€ ë‘ë°°ê°€ ì²´í¬ë˜ì—ˆëŠ”ì§€
     private void OnEnable()
     {
         if(GameManager.instance != null)
         {
-            AudioManager.instance.AudioPlayerAtack();
             GameManager.instance.BulletDecrease();
+            AudioManager.instance.AudioPlayerAtack();
         }
     }
     private void OnDisable()

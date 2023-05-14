@@ -51,8 +51,11 @@ public class GameManager : MonoBehaviour
 
 
     private void Awake()
-    {   instance = this;
-        DontDestroyOnLoad(gameObject);
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
     private void OnEnable()
     {
@@ -114,31 +117,31 @@ public class GameManager : MonoBehaviour
         slider.value = 0;
         playerHeart = playerHeartMax;
 
-        Debug.Log($"{stage} start");
+        //Debug.Log($"{stage} start");
 
         switch (stage)
         {
             case 1:
-                Debug.Log("Case 1");
+                //Debug.Log("Case 1");
                 prograssValue = (1.0f / stage1Quantity);
                 spawnerDirect.StartSpawn();
                 break;
             case 2:
-                Debug.Log("Case 2");
+                //Debug.Log("Case 2");
                 prograssValue = (1.0f / stage2Quantity);
                 spawnerDirect.StartSpawn();
                 spawnerSign.StartSpawn();
                 break;
             case 3:
-                Debug.Log("Case 3");
+                //Debug.Log("Case 3");
                 slider.value = 1;
 
-                Instantiate(boss.gameObject);
+                GameObject obj = Instantiate(boss.gameObject);
+                obj.GetComponent<EnemyBoss>().BossDied += GameClear;
                 prograssValue = 1.0f / boss.BossHP;
-                Debug.Log($"BossHP : {boss.BossHP}");
                 break;
             default:
-                Debug.Log("Case Default");
+                //Debug.Log("Case Default");
                 prograssValue = 0.1f;
                 break;
         }
@@ -177,6 +180,12 @@ public class GameManager : MonoBehaviour
     public void BossDefeat()
     {
         isGaming = false;
+    }
+    void GameClear()
+    {
+        isGaming= false;
+        Debug.Log("Game Clear!");
+
     }
     //--------------------------------    UI           관련   --------------------------------
 
@@ -235,14 +244,11 @@ public class GameManager : MonoBehaviour
         }
         //보스스테이지!
         else
-        { 
+        {
+            //Debug.Log(boss.BossHP);
             if (slider.value>0 && isGaming)
             {
                 slider.value -= prograssValue;
-                if(slider.value<0)
-                {
-                    Debug.Log("Boss Clear");
-                }
             }
         }
     }
@@ -253,7 +259,7 @@ public class GameManager : MonoBehaviour
     {
         // 풀의 개체들이 비활상태여서 적용이 안되는 문제가 발생함.  -> 해결
 
-        Debug.Log("AbilityDamage1dot5Up");
+        //Debug.Log("AbilityDamage1dot5Up");
         damageDoubleCheck = true;
 
         DirectEnemyPool directEnemyPool = FindObjectOfType<DirectEnemyPool>();

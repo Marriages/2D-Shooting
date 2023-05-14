@@ -370,6 +370,34 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UIOption"",
+            ""id"": ""04c13098-acd9-40fc-b0b2-92a8297dfab1"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc1dcee4-0e2a-4449-bc3b-33777277efbd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9f1a7e80-17ee-480e-836a-0d667a6f8500"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -406,6 +434,9 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         m_UIChoice_Left = m_UIChoice.FindAction("Left", throwIfNotFound: true);
         m_UIChoice_Right = m_UIChoice.FindAction("Right", throwIfNotFound: true);
         m_UIChoice_Decide = m_UIChoice.FindAction("Decide", throwIfNotFound: true);
+        // UIOption
+        m_UIOption = asset.FindActionMap("UIOption", throwIfNotFound: true);
+        m_UIOption_Pause = m_UIOption.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -648,6 +679,39 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         }
     }
     public UIChoiceActions @UIChoice => new UIChoiceActions(this);
+
+    // UIOption
+    private readonly InputActionMap m_UIOption;
+    private IUIOptionActions m_UIOptionActionsCallbackInterface;
+    private readonly InputAction m_UIOption_Pause;
+    public struct UIOptionActions
+    {
+        private @InputSystemController m_Wrapper;
+        public UIOptionActions(@InputSystemController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_UIOption_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UIOption; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIOptionActions set) { return set.Get(); }
+        public void SetCallbacks(IUIOptionActions instance)
+        {
+            if (m_Wrapper.m_UIOptionActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_UIOptionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public UIOptionActions @UIOption => new UIOptionActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -679,5 +743,9 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnDecide(InputAction.CallbackContext context);
+    }
+    public interface IUIOptionActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }
