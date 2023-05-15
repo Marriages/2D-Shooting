@@ -62,6 +62,7 @@ MonoBehaviour:
   EnemyHit: {fileID: 8300000, guid: b125769d702154d44863572cbb759d03, type: 3}
   EnemyDie: {fileID: 8300000, guid: 2c08bf368ee986e439950b7ee7527be6, type: 3}
   GameOver: {fileID: 8300000, guid: 4e08e4feca85ba8438e8bb6756916de6, type: 3}
+  Ending: {fileID: 8300000, guid: 31f940c6aa6085e428908ea2a3c341b5, type: 3}
 --- !u!82 &3785102579151196220
 AudioSource:
   m_ObjectHideFlags: 0

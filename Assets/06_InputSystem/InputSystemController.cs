@@ -392,6 +392,15 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec1a5605-bd62-44f5-b1de-bcca41341ac9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -414,6 +423,17 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""Tuto"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a609038-ff29-4bca-abd0-3b29ed392b0b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -458,6 +478,7 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
         m_UIOption = asset.FindActionMap("UIOption", throwIfNotFound: true);
         m_UIOption_Pause = m_UIOption.FindAction("Pause", throwIfNotFound: true);
         m_UIOption_Tuto = m_UIOption.FindAction("Tuto", throwIfNotFound: true);
+        m_UIOption_Restart = m_UIOption.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -706,12 +727,14 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
     private IUIOptionActions m_UIOptionActionsCallbackInterface;
     private readonly InputAction m_UIOption_Pause;
     private readonly InputAction m_UIOption_Tuto;
+    private readonly InputAction m_UIOption_Restart;
     public struct UIOptionActions
     {
         private @InputSystemController m_Wrapper;
         public UIOptionActions(@InputSystemController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_UIOption_Pause;
         public InputAction @Tuto => m_Wrapper.m_UIOption_Tuto;
+        public InputAction @Restart => m_Wrapper.m_UIOption_Restart;
         public InputActionMap Get() { return m_Wrapper.m_UIOption; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -727,6 +750,9 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                 @Tuto.started -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnTuto;
                 @Tuto.performed -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnTuto;
                 @Tuto.canceled -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnTuto;
+                @Restart.started -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_UIOptionActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_UIOptionActionsCallbackInterface = instance;
             if (instance != null)
@@ -737,6 +763,9 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
                 @Tuto.started += instance.OnTuto;
                 @Tuto.performed += instance.OnTuto;
                 @Tuto.canceled += instance.OnTuto;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
         }
     }
@@ -777,5 +806,6 @@ public partial class @InputSystemController : IInputActionCollection2, IDisposab
     {
         void OnPause(InputAction.CallbackContext context);
         void OnTuto(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

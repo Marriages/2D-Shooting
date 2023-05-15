@@ -36,13 +36,24 @@ public class AudioManager : MonoBehaviour
         set
         {
             if (value < 0)
+            {
                 effectSoundSize = 0f;
+                atackSoundSize = 0f;
+            }
             else if(value>1)
+            {
                 effectSoundSize = 1f;
-            else
-                effectSoundSize = value;
+                atackSoundSize = 0.8f;
 
-            audioEffect.volume = EffectSoundSize;
+            }
+            else
+            {
+                effectSoundSize = value;
+                atackSoundSize = value * 0.8f;
+            }
+
+            audioEffect.volume = effectSoundSize;
+            audioAtack.volume = atackSoundSize;
         }
     }
 
@@ -55,6 +66,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip EnemyHit;
     public AudioClip EnemyDie;          // 거의 안들림
     public AudioClip GameOver;
+    public AudioClip Ending;
     
     private void Awake()
     {
@@ -94,6 +106,17 @@ public class AudioManager : MonoBehaviour
     public void AudioBackOff()
     {
         audioBackground.Stop();
+    }
+    public void AudioEndingStart()
+    {
+        audioBackground.clip = Ending;
+        audioBackground.Play();
+    }
+    public void AudioRestart()
+    {
+        audioBackground.Stop();
+        audioBackground.clip = background;
+        audioBackground.Play();
     }
 
     public void AudioPlayerHit()

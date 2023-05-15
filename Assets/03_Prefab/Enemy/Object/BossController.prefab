@@ -61,12 +61,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6834456829136112384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: -1.7500005, z: 0}
+  m_LocalPosition: {x: -0.5, y: -1.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6834456830988867895}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6834456829251919709
 GameObject:
@@ -257,7 +257,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6834456830988867895}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6834456829945254393
 GameObject:
@@ -314,7 +314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6834456830145810432}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -1.7500006, z: 0}
+  m_LocalPosition: {x: 0.5, y: -1.7500006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -463,16 +463,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  dashSpeed: 15
-  fireBurstTime: 0.3
+  dashSpeed: 18
+  fireBurstTime: 0.4
   waitTime: 1
-  normalBulletSpeed: 4
-  traceBulletSpeed: 2
   spawnInterval: 0.5
   spawnCount: 6
   dashWaitTime: 2
   destroyEffect: {fileID: 5537939034982290191, guid: cdd5a8d609d08074fb3f3cbc55f85334, type: 3}
-  bossHP: 100
+  bossHP: 360
 --- !u!1 &6834456830720188116
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,9 +564,9 @@ Transform:
   - {fileID: 6834456829299485123}
   - {fileID: 6834456830290949573}
   - {fileID: 6834456830145810463}
-  - {fileID: 6834456829833595866}
-  - {fileID: 6834456830626646562}
   - {fileID: 6834456829136112415}
+  - {fileID: 6834456830626646562}
+  - {fileID: 6834456829833595866}
   m_Father: {fileID: 7046027374078128816}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -671,7 +669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807bf3a785bcc7446a0553cacbd2c5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3
+  bulletHpMax: 2
 --- !u!58 &6641203545507684059
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -808,7 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807bf3a785bcc7446a0553cacbd2c5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3
+  bulletHpMax: 2
 --- !u!58 &6641203546472332194
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -945,7 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958228134106107
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958227161524555
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958229023677314
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958229205726325
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958228438421247
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce518647d3478a439f24bbffddff428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 8
 --- !u!58 &6640958228465627263
 CircleCollider2D:
   m_ObjectHideFlags: 0

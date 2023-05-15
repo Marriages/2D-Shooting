@@ -35,8 +35,6 @@ public class EnemyBoss : MonoBehaviour
     public float fireBurstTime = 0.3f;
     public float waitTime=1f;
 
-    public float normalBulletSpeed = 4f;
-    public float traceBulletSpeed = 2f;
     GameObject[] normalBullet;
     GameObject[] traceBullet;
     int normalBulletIndex=0;
@@ -231,7 +229,10 @@ public class EnemyBoss : MonoBehaviour
         {
             normalBulletIndex = 0;
             traceBullet[0].SetActive(true);
-            traceBullet[0].transform.position = traceFirePosition.position;
+            traceBullet[0].transform.position = traceFirePosition.position + Vector3.up;
+            traceBullet[1].SetActive(true);
+            traceBullet[1].transform.position = traceFirePosition.position+Vector3.down;
+
             isDone = true;
         }
     }
@@ -307,12 +308,14 @@ public class EnemyBoss : MonoBehaviour
         actionQueue.Enqueue(BossDie);
         currentTime = Time.time;
         GameManager.instance.BossDefeat();
+        AudioManager.instance.AudioBackOff();
         bossBodyDetector.BossHit -= BossHit;
     }
     void BossDie()
     {
         if (Time.time - currentTime > 0.1f)
         {
+            AudioManager.instance.AudioEnemyDie(); 
             GameObject obj = Instantiate(destroyEffect);
             obj.transform.position = bossBody.position + UnityEngine.Random.insideUnitSphere;
             destroyEffectNum--;
@@ -331,6 +334,7 @@ public class EnemyBoss : MonoBehaviour
     }
     void BossHit()
     {
+        AudioManager.instance.AudioEnemyHit();
         BossHP--;
     }
 

@@ -44,6 +44,8 @@ public class PlayerMove : MonoBehaviour
     }
     public void PlayerMoveInputUnConnect()
     {
+        inputDir = Vector2.zero;
+        rigid.velocity = Vector2.zero;
         inputActions.Player.UDLR.canceled -= OnMove;
         inputActions.Player.UDLR.performed -= OnMove;
         inputActions.Player.Disable();

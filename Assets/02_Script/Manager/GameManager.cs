@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -28,8 +29,8 @@ public class GameManager : MonoBehaviour
     public int playerHeartMax = 3;
     int score = 0;
 
-    int bulletMaxNum = 8;
-    int currentBulletNum = 8;
+    int bulletMaxNum = 4;
+    int currentBulletNum = 4;
     public int BulletMaxNum { get => bulletMaxNum; }
 
     public bool damageDoubleCheck = false;
@@ -45,9 +46,14 @@ public class GameManager : MonoBehaviour
     public int stage1Quantity = 10;
     public int stage2Quantity = 15;
 
+    float clearTime;
 
 
 
+    private void Start()
+    {
+        clearTime = Time.time;
+    }
 
 
     private void Awake()
@@ -91,7 +97,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         playerHeart = playerHeartMax;
         slider.value = 0;
-        bulletMaxNum = 8;
+        bulletMaxNum = 4;
 
         isGaming = false;
         gameStartButton.SetActive(true);
@@ -163,13 +169,13 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator SliderValueDecreaseEffect()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         while (slider.value > 0)
         {
             slider.value -= 0.01f;
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         playerAtack.PlayerAtackInputUnConnect();
         playerMove.PlayerMoveInputUnConnect();
         playerMove.PlayerMoveReset();
@@ -184,7 +190,17 @@ public class GameManager : MonoBehaviour
     void GameClear()
     {
         isGaming= false;
-        Debug.Log("Game Clear!");
+        ScoreUp(100);
+        Debug.Log("Game Clear! Save Start");
+
+        clearTime = Time.time-clearTime;
+
+        StartCoroutine(ui.EndingPanelStart());
+        //saveData.score = score;
+    }
+    public void NextScene()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
 
     }
     //--------------------------------    UI           관련   --------------------------------

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class UIController : MonoBehaviour
     GameObject gameover;
     GameObject tutorial;
     GameObject pause;
+    Image endingPanel;
 
     InputSystemController inputAction;
     bool isOption=false;
@@ -43,19 +46,27 @@ public class UIController : MonoBehaviour
         tutorial.SetActive(false);
         pause = transform.GetChild(8).gameObject;
         pause.SetActive(false);
+        endingPanel = transform.GetChild(9).GetComponent<Image>() ;
+        endingPanel.gameObject.SetActive(false);
 
         inputAction = new InputSystemController();
         
     }
     private void OnEnable()
     {
+        UIInputConnect();
+    }
+    private void OnDisable()
+    {
+        UIInputDisconnect();
+    }
+    void UIInputConnect()
+    {
         inputAction.UIOption.Enable();
         inputAction.UIOption.Pause.performed += PauseOption;
         inputAction.UIOption.Tuto.performed += TutoExit;
     }
-
-
-    private void OnDisable()
+    void UIInputDisconnect()
     {
         inputAction.UIOption.Tuto.performed -= TutoExit;
         inputAction.UIOption.Pause.performed -= PauseOption;
@@ -65,6 +76,7 @@ public class UIController : MonoBehaviour
     {
         tutorial.SetActive(false);
         GameManager.instance.PlayerBehaviorEnable();
+        inputAction.UIOption.Tuto.performed -= TutoExit;
     }
     private void Start()
     {
@@ -142,9 +154,17 @@ public class UIController : MonoBehaviour
     public void PlayerDieSetting()
     {
         gameover.SetActive(true);
+        inputAction.UIOption.Restart.performed += RestartGame;
         AudioManager.instance.AudioPlayerDie();
         //Debug.Log("플레이어 사망 UI 효과");
         //게임오버 이미지 보여주고 소리까지 출력하고, 랭킹 함 보여주고 이번 플레이에 대한 정보 보여주고, 타이틀 가려면 엔터 누르게 하기.
+    }
+
+    private void RestartGame(InputAction.CallbackContext _)
+    {
+        inputAction.UIOption.Restart.performed -= RestartGame;
+        AudioManager.instance.AudioRestart(); 
+        SceneManager.LoadScene(1);
     }
 
     private void PauseOption(InputAction.CallbackContext _)
@@ -168,6 +188,25 @@ public class UIController : MonoBehaviour
             Time.timeScale = 1;
             GameManager.instance.PlayerBehaviorEnable();
         }
+    }
+    public IEnumerator EndingPanelStart()
+    {
+        endingPanel.gameObject.SetActive(true);
+
+        GameManager.instance.PlayerBehaviorDisable();
+        UIInputDisconnect();
+
+        Color c = Color.black;
+        float alphaSpeed = 0.2f;
+        c.a = 0;
+        while(c.a<1)
+        {
+            c.a += alphaSpeed * Time.deltaTime;
+            endingPanel.color = c;
+            yield return null;
+        }
+        GameManager.instance.NextScene();
+
     }
 
 }

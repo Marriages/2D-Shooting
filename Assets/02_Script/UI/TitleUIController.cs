@@ -15,7 +15,7 @@ public class TitleUIController : MonoBehaviour
     Button backMenu;
 
     GameObject optionMenu;
-    GameObject rankingMenu;
+    //GameObject rankingMenu;
 
     public Action PlayerGameStart;
 
@@ -25,13 +25,13 @@ public class TitleUIController : MonoBehaviour
         gameNameText=transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
         gameStartButton = transform.GetChild(1).GetChild(1).GetComponent<Button>();
         optionButton = transform.GetChild(1).GetChild(2).GetComponent<Button>();
-        rankingButton = transform.GetChild(1).GetChild(3).GetComponent<Button>();
+        //rankingButton = transform.GetChild(1).GetChild(3).GetComponent<Button>();
         backMenu = clickDefender.transform.GetChild(0).GetComponent<Button>();
 
         optionMenu = transform.GetChild(2).gameObject;
         optionMenu.SetActive(false);
-        rankingMenu = transform.GetChild(3).gameObject;
-        rankingMenu.SetActive(false);
+        //rankingMenu = transform.GetChild(3).gameObject;
+        //rankingMenu.SetActive(false);
     }
     // 마우스를 활성화시킬까 말까...
 
@@ -59,7 +59,7 @@ public class TitleUIController : MonoBehaviour
         gameNameText.gameObject.SetActive(false);
         gameStartButton.gameObject.SetActive(false);
         optionButton.gameObject.SetActive(false);
-        rankingButton.gameObject.SetActive(false);
+        //rankingButton.gameObject.SetActive(false);
     }
     void Option()
     {
@@ -84,7 +84,7 @@ public class TitleUIController : MonoBehaviour
         backMenu.gameObject.SetActive(true);
         gameStartButton.gameObject.SetActive(false);
         optionButton.gameObject.SetActive(false);
-        rankingButton.gameObject.SetActive(false);
+        //rankingButton.gameObject.SetActive(false);
 
         optionMenu.SetActive(true);
     }
@@ -108,11 +108,11 @@ public class TitleUIController : MonoBehaviour
         gameNameText.gameObject.SetActive(true);
         gameStartButton.gameObject.SetActive(true);
         optionButton.gameObject.SetActive(true);
-        rankingButton.gameObject.SetActive(true);
+        //rankingButton.gameObject.SetActive(true);
         clickDefender.gameObject.SetActive(false);
 
         optionMenu.SetActive(false);
-        rankingMenu.SetActive(false);
+        //rankingMenu.SetActive(false);
     }
 
 
