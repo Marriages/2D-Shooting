@@ -320,4 +320,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    //------------플레이어 행동 제어
+    public void PlayerBehaviorEnable()
+    {
+        playerMove.PlayerMoveInputConnect();
+        playerAtack.PlayerAtackInputConnect();
+    }
+    public void PlayerBehaviorDisable()
+    {
+        playerMove.PlayerMoveInputUnConnect();
+        playerAtack.PlayerAtackInputUnConnect();
+    }
 }

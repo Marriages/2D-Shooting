@@ -9,7 +9,7 @@ public class UIPause : MonoBehaviour
     Button resume;
     Button option;
     GameObject optionWindow;
-    Button title;
+    Button restart;
 
     UIController ui;
 
@@ -26,8 +26,8 @@ public class UIPause : MonoBehaviour
         option = transform.GetChild(1).GetChild(1).GetComponent<Button>();
         option.onClick.AddListener(OptionClick);
         optionWindow = option.transform.GetChild(1).gameObject;
-        title = transform.GetChild(1).GetChild(2).GetComponent<Button>();
-        title.onClick.AddListener(TitleClick);
+        restart = transform.GetChild(1).GetChild(2).GetComponent<Button>();
+        restart.onClick.AddListener(RestartClick);
 
         ui = transform.parent.GetComponent<UIController>();
     }
@@ -38,15 +38,16 @@ public class UIPause : MonoBehaviour
     }
     void ResumeClick()
     {
-        ui.PauseSetting();
+        ui.PauseOptionSetting();
     }
     void OptionClick()
     {
         isOption = !isOption;
         optionWindow.SetActive(isOption);
     }
-    void TitleClick()
+    void RestartClick()
     {
+        ui.PauseOptionSetting();
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         /*int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         GameObject obj = GameObject.FindWithTag("EventSystem");

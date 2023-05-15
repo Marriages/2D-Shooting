@@ -51,6 +51,26 @@ public class UIController : MonoBehaviour
     {
         inputAction.UIOption.Enable();
         inputAction.UIOption.Pause.performed += PauseOption;
+        inputAction.UIOption.Tuto.performed += TutoExit;
+    }
+
+
+    private void OnDisable()
+    {
+        inputAction.UIOption.Tuto.performed -= TutoExit;
+        inputAction.UIOption.Pause.performed -= PauseOption;
+        inputAction.UIOption.Disable();
+    }
+    private void TutoExit(InputAction.CallbackContext _)
+    {
+        tutorial.SetActive(false);
+        GameManager.instance.PlayerBehaviorEnable();
+    }
+    private void Start()
+    {
+        //튜토리얼 창 보여주기.
+        tutorial.SetActive(true);
+        GameManager.instance.PlayerBehaviorDisable();
     }
 
     public void HeartUpdate(int value)
@@ -129,21 +149,24 @@ public class UIController : MonoBehaviour
 
     private void PauseOption(InputAction.CallbackContext _)
     {
-        PauseSetting();
+        PauseOptionSetting();
+        
     }
-    public void PauseSetting()
+    public void PauseOptionSetting()
     {
         isOption = !isOption;
         pause.SetActive(isOption);
         if (isOption)
         {
             Time.timeScale = 0f;
+            GameManager.instance.PlayerBehaviorDisable();
             //플레이어의 애니메이션? 입력을 막는 장치가 필요해보임.
             //PlayerMove에 별도로 스크립트 추가할 것.
         }
         else
         {
             Time.timeScale = 1;
+            GameManager.instance.PlayerBehaviorEnable();
         }
     }
 
