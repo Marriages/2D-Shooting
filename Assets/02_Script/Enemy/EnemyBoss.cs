@@ -22,6 +22,7 @@ public class EnemyBoss : MonoBehaviour
 
     Transform bossBody;
     SpriteRenderer bossBodyRenderer;
+    SpriteRenderer dangerArea;
     EnemyBossBody bossBodyDetector;
     Transform normalFirePosition1;
     Transform normalFirePosition2;
@@ -95,6 +96,7 @@ public class EnemyBoss : MonoBehaviour
 
         bossBody = transform.GetChild(0).transform;
         bossBodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        dangerArea = transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>();
         dashColor = bossBodyRenderer.color;
 
         traceFirePosition = bossBody.GetChild(0).transform;
