@@ -31,7 +31,11 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        if(HeartValue == null)
+        FindComponent();
+    }
+    void FindComponent()
+    {
+        if (HeartValue == null)
             HeartValue = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
         if (StageValue == null)
             StageValue = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -46,11 +50,10 @@ public class UIController : MonoBehaviour
         tutorial.SetActive(false);
         pause = transform.GetChild(8).gameObject;
         pause.SetActive(false);
-        endingPanel = transform.GetChild(9).GetComponent<Image>() ;
+        endingPanel = transform.GetChild(9).GetComponent<Image>();
         endingPanel.gameObject.SetActive(false);
 
         inputAction = new InputSystemController();
-        
     }
     private void OnEnable()
     {

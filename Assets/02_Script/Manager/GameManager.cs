@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 
     int bulletMaxNum = 4;
     int currentBulletNum = 4;
-    public int BulletMaxNum { get => bulletMaxNum; }
 
     public bool damageDoubleCheck = false;
     bool bulletSpeedDouble = false;
@@ -236,7 +235,7 @@ public class GameManager : MonoBehaviour
     //총알회수
     public void BulletIncrease()
     {
-        if(currentBulletNum<BulletMaxNum)
+        if(currentBulletNum< bulletMaxNum)
         {
             currentBulletNum++;
             ui.BulletUpdate(currentBulletNum);
