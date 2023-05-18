@@ -22,7 +22,6 @@ public class EnemyBoss : MonoBehaviour
 
     Transform bossBody;
     SpriteRenderer bossBodyRenderer;
-    SpriteRenderer dangerArea;
     EnemyBossBody bossBodyDetector;
     Transform normalFirePosition1;
     Transform normalFirePosition2;
@@ -58,7 +57,7 @@ public class EnemyBoss : MonoBehaviour
     public Action BossDied;
 
     //보스 데미지 받는비율을,,,,,1.5배일경우 고려해봐얗게는걸?
-    public int bossHP=360;
+    int bossHP=360;
     public int BossHP
     {
         get => bossHP;
@@ -91,12 +90,15 @@ public class EnemyBoss : MonoBehaviour
 
     private void Awake()
     {
+        FindComponent();
+    }
+    void FindComponent()
+    {
         try { player = FindObjectOfType<PlayerMove>().transform; }
         catch (NullReferenceException) { Debug.Log("플레이어 없음"); }
 
         bossBody = transform.GetChild(0).transform;
         bossBodyRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        dangerArea = transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>();
         dashColor = bossBodyRenderer.color;
 
         traceFirePosition = bossBody.GetChild(0).transform;
@@ -109,11 +111,11 @@ public class EnemyBoss : MonoBehaviour
 
         normalBullet = new GameObject[transform.GetChild(2).childCount];
         //Debug.Log(normalBullet.Length);
-        for(int i=0; i< normalBullet.Length; i++)
+        for (int i = 0; i < normalBullet.Length; i++)
         {
             normalBullet[i] = transform.GetChild(2).GetChild(i).gameObject;
             normalBullet[i].SetActive(false);
-            
+
         }
 
         traceBullet = new GameObject[transform.GetChild(3).childCount];
@@ -141,6 +143,13 @@ public class EnemyBoss : MonoBehaviour
 
     private void Start()
     {
+        InsertQueue();
+
+        if (GameManager.instance.damageDoubleCheck == true)
+            getDamage = (int)(getDamage * 1.5f);
+    }
+    void InsertQueue()
+    {
         actionQueue.Enqueue(ReturnSetting);
         actionQueue.Enqueue(ReturnState);
         actionQueue.Enqueue(WaitOneSecond);
@@ -150,9 +159,6 @@ public class EnemyBoss : MonoBehaviour
         actionQueue.Enqueue(WaitOneSecond);
         actionQueue.Enqueue(DashSetting);
         actionQueue.Enqueue(Dash);
-
-        if (GameManager.instance.damageDoubleCheck == true)
-            getDamage = (int)(getDamage * 1.5f);
     }
     private void Update()
     {
