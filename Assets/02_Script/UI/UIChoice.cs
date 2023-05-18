@@ -57,7 +57,7 @@ public class UIChoice : MonoBehaviour
                 choiceOutline[i].color = Color.white;
         }
 
-        InitializeAbility();        //·£´ıÇÑ ´É·ÂÄ¡ ¼³Á¤ÇÏ±â.
+        InitializeAbility();        //ëœë¤í•œ ëŠ¥ë ¥ì¹˜ ì„¤ì •í•˜ê¸°.
 
     }
     private void OnEnable()
@@ -65,7 +65,7 @@ public class UIChoice : MonoBehaviour
         
         InitializeUIChoice();
 
-        /////////////////////////Player¸¦ ¿òÁ÷ÀÌÁöµµ, ¹ß»çÇÏÁöµµ ¸øÇÏ°Ô ¸·¾Æ¾ß ÇÔ./////////////////////////
+        /////////////////////////Playerë¥¼ ì›€ì§ì´ì§€ë„, ë°œì‚¬í•˜ì§€ë„ ëª»í•˜ê²Œ ë§‰ì•„ì•¼ í•¨./////////////////////////
 
         inputActions.UIChoice.Enable();
         inputActions.UIChoice.Left.performed += UILeftMove;
@@ -79,7 +79,7 @@ public class UIChoice : MonoBehaviour
         inputActions.UIChoice.Left.performed -= UILeftMove;
         inputActions.UIChoice.Disable();
 
-        /////////////////////////Player¸¦ ´Ù½Ã Á¤»óÀûÀ¸·Î ¿òÁ÷ÀÏ ¼öÀÖ°Ô ÇØ¾ßÇÔ./////////////////////////
+        /////////////////////////Playerë¥¼ ë‹¤ì‹œ ì •ìƒì ìœ¼ë¡œ ì›€ì§ì¼ ìˆ˜ìˆê²Œ í•´ì•¼í•¨./////////////////////////
     }
     void InitializeAbility()
     {
@@ -88,9 +88,9 @@ public class UIChoice : MonoBehaviour
         abil[0].abilityImage = Resources.Load<Sprite>("Image/DamageUp");
         abil[0].abilityDelegate = AbilityDamage1dot5Up;
         //GameManager.Instance.AbilityBulletDouble;
-        // ´Ù¸¥ Å¬·¡½ºÀÇ ÇÔ¼ö¸¦ ³Ö´Â °ÍÀº ºÒ°¡´ÉÇØº¸ÀÎ´Ù.  -> ³»ºÎÀûÀ¸·Î GameManager·Î Á¢±ÙÇÒ ¼ö ÀÖ´Â ÇÔ¼ö¸¦ µû·Î ¸¸µé¾ú´Ù.
+        // ë‹¤ë¥¸ í´ë˜ìŠ¤ì˜ í•¨ìˆ˜ë¥¼ ë„£ëŠ” ê²ƒì€ ë¶ˆê°€ëŠ¥í•´ë³´ì¸ë‹¤.  -> ë‚´ë¶€ì ìœ¼ë¡œ GameManagerë¡œ ì ‘ê·¼í•  ìˆ˜ ìˆëŠ” í•¨ìˆ˜ë¥¼ ë”°ë¡œ ë§Œë“¤ì—ˆë‹¤.
 
-        abil[1].abilityName = "Bullet Capacity x 1.5";
+        abil[1].abilityName = "Bullet Capacity x 2";
         abil[1].abilityImage = Resources.Load<Sprite>("Image/BulletCapacityUp");
         abil[1].abilityDelegate = AbilityBulletCapacityDouble;
 
@@ -106,22 +106,22 @@ public class UIChoice : MonoBehaviour
         abil[4].abilityImage = Resources.Load<Sprite>("Image/BulletDouble");
         abil[4].abilityDelegate = AbilityBulletDouble;
 
-        //À§¿¡¼­ ¸¸µé¾îÁø abil ¹è¿­À» ¸®½ºÆ®¿¡ ³Ö±â.
+        //ìœ„ì—ì„œ ë§Œë“¤ì–´ì§„ abil ë°°ì—´ì„ ë¦¬ìŠ¤íŠ¸ì— ë„£ê¸°.
         abilList = new List<Ability>(abil);
-        //Debug.Log("¼¯±â Àü");
+        //Debug.Log("ì„ê¸° ì „");
         //foreach(Ability ab in abilList)
         //    Debug.Log(ab.abilityName);
 
         abilList = ShuffleAbility(abilList);
 
-        //Debug.Log("¼¯Àº ÈÄ");
+        //Debug.Log("ì„ì€ í›„");
         //foreach (Ability ab in abilList)
         //    Debug.Log(ab.abilityName);
 
     }
     List<Ability> ShuffleAbility(List<Ability> abil)
     {
-        //Fisher - Yates ¾Ë°í¸®Áò »ç¿ëÇÏ¿© ¹è¿­ ¼¯±â
+        //Fisher - Yates ì•Œê³ ë¦¬ì¦˜ ì‚¬ìš©í•˜ì—¬ ë°°ì—´ ì„ê¸°
         int listCnt = abil.Count;
         Ability tempAbil;
         for (int i = listCnt - 1;i>0;i--)
@@ -135,12 +135,12 @@ public class UIChoice : MonoBehaviour
     }
     void InitializeUIChoice()
     {
-        // ¼¼°³ÀÇ ¼±ÅÃÁö¿¡ InitializeAbility ¶Ç´Â UiDecide¿¡¼­ ¼¯±ä abilListÀÇ 1,2,3¹øÂ° °ªÀ» ¼ø¼­´ë·Î ³ÖÀ» °Í.
+        // ì„¸ê°œì˜ ì„ íƒì§€ì— InitializeAbility ë˜ëŠ” UiDecideì—ì„œ ì„ê¸´ abilListì˜ 1,2,3ë²ˆì§¸ ê°’ì„ ìˆœì„œëŒ€ë¡œ ë„£ì„ ê²ƒ.
         for(int i=0;i< indexNum; i++)
         {
             if (abilList.Count>=3)
             {
-                //Áö±İÀº Resource¸¦ »ç¿ëÇÏÁö¸¸, ³ªÁß¿¡´Â.......BundleÀ» »ç¿ëÇØº¸µµ·Ï ÇÏÀÚ!
+                //ì§€ê¸ˆì€ Resourceë¥¼ ì‚¬ìš©í•˜ì§€ë§Œ, ë‚˜ì¤‘ì—ëŠ”.......Bundleì„ ì‚¬ìš©í•´ë³´ë„ë¡ í•˜ì!
                 choiceImage[i].sprite = abilList[i].abilityImage;
                 choiceText[i].text = abilList[i].abilityName;
             }
@@ -153,12 +153,12 @@ public class UIChoice : MonoBehaviour
 
     private void UIDecide(InputAction.CallbackContext _)
     {
-        //1,2,3,¹øÂ° °ª Áß ¼±ÅÃµÈ °ªÀ» ¸®½ºÆ®¿¡¼­ Á¦°ÅÇÏ°í, ¸®½ºÆ®¸¦ ¼¯À» °Í.
+        //1,2,3,ë²ˆì§¸ ê°’ ì¤‘ ì„ íƒëœ ê°’ì„ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°í•˜ê³ , ë¦¬ìŠ¤íŠ¸ë¥¼ ì„ì„ ê²ƒ.
         abilList[uiIndex].abilityDelegate();
         abilList.RemoveAt(uiIndex);
         abilList = ShuffleAbility(abilList);
 
-        //°ÔÀÓ¸Å´ÏÀú¿¡°Ô ³» ÇÒÀÏ ³¡³µ´Ù°í ÀüÇØÁÖ±â.
+        //ê²Œì„ë§¤ë‹ˆì €ì—ê²Œ ë‚´ í• ì¼ ëë‚¬ë‹¤ê³  ì „í•´ì£¼ê¸°.
         GameManager.instance.NextStageReady();
     }
     private void UILeftMove(InputAction.CallbackContext _)
@@ -183,7 +183,7 @@ public class UIChoice : MonoBehaviour
     }
 
 
-    //------------------Ability ±¸Á¶Ã¼ Àü¿ë GamaManager Á¢±Ù ³»ºÎÇÔ¼ö-----------------------------
+    //------------------Ability êµ¬ì¡°ì²´ ì „ìš© GamaManager ì ‘ê·¼ ë‚´ë¶€í•¨ìˆ˜-----------------------------
     public void AbilityDamage1dot5Up()  { 
         GameManager.instance.AbilityDamage1dot5Up();
     }
@@ -199,5 +199,5 @@ public class UIChoice : MonoBehaviour
     public void AbilityBulletSpeedDouble() {
         GameManager.instance.AbilityBulletSpeedDouble();
     }
-    //------------------Ability ±¸Á¶Ã¼ Àü¿ë GamaManager Á¢±Ù ³»ºÎÇÔ¼ö-----------------------------
+    //------------------Ability êµ¬ì¡°ì²´ ì „ìš© GamaManager ì ‘ê·¼ ë‚´ë¶€í•¨ìˆ˜-----------------------------
 }
